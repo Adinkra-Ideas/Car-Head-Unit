@@ -38,6 +38,7 @@ else()
     else()
         add_executable(head-unit
           ${PROJECT_SOURCES}
+          src/GearHMI.hpp src/GearHMI.cpp
         )
     endif()
 endif()
