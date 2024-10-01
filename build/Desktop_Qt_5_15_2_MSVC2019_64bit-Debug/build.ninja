@@ -76,6 +76,15 @@ build CMakeFiles\head-unit.dir\src\GearHMI.cpp.obj: CXX_COMPILER__head-unit_unsc
   TARGET_COMPILE_PDB = CMakeFiles\head-unit.dir\
   TARGET_PDB = head-unit.pdb
 
+build CMakeFiles\head-unit.dir\src\HeadUnitHMI.cpp.obj: CXX_COMPILER__head-unit_unscanned_Debug C$:\Users\user\Documents\qt_projects\head-unit\src\HeadUnitHMI.cpp || cmake_object_order_depends_target_head-unit
+  DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB
+  FLAGS = -DQT_QML_DEBUG /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
+  INCLUDES = -IC:\Users\user\Documents\qt_projects\head-unit\build\Desktop_Qt_5_15_2_MSVC2019_64bit-Debug\head-unit_autogen\include -external:IC:\Qt\5.15.2\msvc2019_64\include -external:IC:\Qt\5.15.2\msvc2019_64\include\QtCore -external:IC:\Qt\5.15.2\msvc2019_64\.\mkspecs\win32-msvc -external:IC:\Qt\5.15.2\msvc2019_64\include\QtQuick -external:IC:\Qt\5.15.2\msvc2019_64\include\QtQmlModels -external:IC:\Qt\5.15.2\msvc2019_64\include\QtQml -external:IC:\Qt\5.15.2\msvc2019_64\include\QtNetwork -external:IC:\Qt\5.15.2\msvc2019_64\include\QtGui -external:IC:\Qt\5.15.2\msvc2019_64\include\QtANGLE -external:W0
+  OBJECT_DIR = CMakeFiles\head-unit.dir
+  OBJECT_FILE_DIR = CMakeFiles\head-unit.dir\src
+  TARGET_COMPILE_PDB = CMakeFiles\head-unit.dir\
+  TARGET_PDB = head-unit.pdb
+
 build CMakeFiles\head-unit.dir\head-unit_autogen\UVLADIE3JM\qrc_qml.cpp.obj: CXX_COMPILER__head-unit_unscanned_Debug C$:\Users\user\Documents\qt_projects\head-unit\build\Desktop_Qt_5_15_2_MSVC2019_64bit-Debug\head-unit_autogen\UVLADIE3JM\qrc_qml.cpp || cmake_object_order_depends_target_head-unit
   DEFINES = -DQT_CORE_LIB -DQT_GUI_LIB -DQT_NETWORK_LIB -DQT_QMLMODELS_LIB -DQT_QML_LIB -DQT_QUICK_LIB
   FLAGS = -DQT_QML_DEBUG /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
@@ -93,7 +102,7 @@ build CMakeFiles\head-unit.dir\head-unit_autogen\UVLADIE3JM\qrc_qml.cpp.obj: CXX
 #############################################
 # Link the executable head-unit.exe
 
-build head-unit.exe: CXX_EXECUTABLE_LINKER__head-unit_Debug CMakeFiles\head-unit.dir\head-unit_autogen\mocs_compilation.cpp.obj CMakeFiles\head-unit.dir\src\main.cpp.obj CMakeFiles\head-unit.dir\src\GearHMI.cpp.obj CMakeFiles\head-unit.dir\head-unit_autogen\UVLADIE3JM\qrc_qml.cpp.obj | C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Quickd.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5QmlModelsd.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Qmld.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Networkd.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib C$:\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib || head-unit_autogen head-unit_autogen_timestamp_deps
+build head-unit.exe: CXX_EXECUTABLE_LINKER__head-unit_Debug CMakeFiles\head-unit.dir\head-unit_autogen\mocs_compilation.cpp.obj CMakeFiles\head-unit.dir\src\main.cpp.obj CMakeFiles\head-unit.dir\src\GearHMI.cpp.obj CMakeFiles\head-unit.dir\src\HeadUnitHMI.cpp.obj CMakeFiles\head-unit.dir\head-unit_autogen\UVLADIE3JM\qrc_qml.cpp.obj | C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Quickd.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5QmlModelsd.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Qmld.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Networkd.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib C$:\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib C$:\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib || head-unit_autogen head-unit_autogen_timestamp_deps
   FLAGS = -DQT_QML_DEBUG /DWIN32 /D_WINDOWS /GR /EHsc /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:windows
   LINK_LIBRARIES = C:\Qt\5.15.2\msvc2019_64\lib\Qt5Quickd.lib  C:\Qt\5.15.2\msvc2019_64\lib\Qt5QmlModelsd.lib  C:\Qt\5.15.2\msvc2019_64\lib\Qt5Qmld.lib  C:\Qt\5.15.2\msvc2019_64\lib\Qt5Networkd.lib  C:\Qt\5.15.2\msvc2019_64\lib\Qt5Guid.lib  C:\Qt\5.15.2\msvc2019_64\lib\Qt5Cored.lib  C:\Qt\5.15.2\msvc2019_64\lib\qtmaind.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

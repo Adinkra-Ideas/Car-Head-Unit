@@ -13,7 +13,7 @@ Window {
 
     AnimatedImage {
         id: carLogo
-        paused: true;
+        paused: (gearHMI.isGear > 0) ? false : true;
         source: "qrc:/images/HU_logo.gif";
         anchors.centerIn: parent;
     }
@@ -56,10 +56,10 @@ Window {
         AnimatedImage {
             width: 40;
             height: 25;
-            paused: false;
-            source: "qrc:/images/selected_gear.gif";
+            paused: (gearHMI.isGear === 0) ? false : true;
+            source: (gearHMI.isGear === 0) ? "qrc:/images/selected_gear.gif" : "";
             Text {
-                color: "#F6D101";
+                color: (gearHMI.isGear === 0) ? "#F6D101" : "#3B3200";
                 text: "P";
                 width: 50;
                 height: 50;
@@ -67,14 +67,20 @@ Window {
                 anchors.left: parent.left;
                 anchors.leftMargin: 15;
             }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    gearHMI.isGear = 0;
+                }
+            }
         }
         AnimatedImage {
             width: 40;
             height: 25;
-            paused: true;
-            source: "qrc:/images/selected_gear.gif";
+            paused: (gearHMI.isGear === 1) ? false : true;
+            source: (gearHMI.isGear === 1) ? "qrc:/images/selected_gear.gif" : "";
             Text {
-                color: "#3B3200";
+                color: (gearHMI.isGear === 1) ? "#F6D101" : "#3B3200";
                 text: "N";
                 width: 50;
                 height: 50;
@@ -82,14 +88,20 @@ Window {
                 anchors.left: parent.left;
                 anchors.leftMargin: 14;
             }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    gearHMI.isGear = 1;
+                }
+            }
         }
         AnimatedImage {
             width: 40;
             height: 25;
-            paused: true;
-            source: "qrc:/images/selected_gear.gif";
+            paused: (gearHMI.isGear === 2) ? false : true;
+            source: (gearHMI.isGear === 2) ? "qrc:/images/selected_gear.gif" : "";
             Text {
-                color: "#3B3200";
+                color: (gearHMI.isGear === 2) ? "#F6D101" : "#3B3200";
                 text: "D";
                 width: 50;
                 height: 50;
@@ -97,21 +109,33 @@ Window {
                 anchors.left: parent.left;
                 anchors.leftMargin: 13;
             }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    gearHMI.isGear = 2;
+                }
+            }
         }
         AnimatedImage {
             width: 40;
             height: 25;
-            paused: true;
-            source: "qrc:/images/selected_gear.gif";
+            paused: (gearHMI.isGear === 3) ? false : true;
+            source: (gearHMI.isGear === 3) ? "qrc:/images/selected_gear.gif" : "";
 
             Text {
-                color: "#3B3200";
+                color: (gearHMI.isGear === 3) ? "#F6D101" : "#3B3200";
                 text: "R";
                 width: 50;
                 height: 50;
                 font.pointSize: 15;
                 anchors.left: parent.left;
                 anchors.leftMargin: 14;
+            }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    gearHMI.isGear = 3;
+                }
             }
         }
     }

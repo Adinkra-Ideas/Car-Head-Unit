@@ -95,6 +95,12 @@
 			"MU",
 			"UVLADIE3JM/moc_GearHMI.cpp",
 			null
+		],
+		[
+			"C:/Users/user/Documents/qt_projects/head-unit/src/HeadUnitHMI.hpp",
+			"MU",
+			"UVLADIE3JM/moc_HeadUnitHMI.cpp",
+			null
 		]
 	],
 	"HEADER_EXTENSIONS" : [ "h", "hh", "h++", "hm", "hpp", "hxx", "in", "txx" ],
@@ -148,6 +154,11 @@
 	[
 		[
 			"C:/Users/user/Documents/qt_projects/head-unit/src/GearHMI.cpp",
+			"MU",
+			null
+		],
+		[
+			"C:/Users/user/Documents/qt_projects/head-unit/src/HeadUnitHMI.cpp",
 			"MU",
 			null
 		],

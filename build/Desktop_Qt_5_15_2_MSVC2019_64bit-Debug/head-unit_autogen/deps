@@ -1,5 +1,6 @@
 head-unit_autogen/timestamp: \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/QObject \
+	C:/Qt/5.15.2/msvc2019_64/include/QtCore/QThread \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qalgorithms.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qarraydata.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qatomic.h \
@@ -11,6 +12,8 @@ head-unit_autogen/timestamp: \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qconfig.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qcontainerfwd.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qcontainertools_impl.h \
+	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qdeadlinetimer.h \
+	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qelapsedtimer.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qflags.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qglobal.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qglobalstatic.h \
@@ -40,6 +43,7 @@ head-unit_autogen/timestamp: \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qsysinfo.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qsystemdetection.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qtcore-config.h \
+	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qthread.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qtypeinfo.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qvarlengtharray.h \
 	C:/Qt/5.15.2/msvc2019_64/include/QtCore/qvector.h \
@@ -119,6 +123,8 @@ head-unit_autogen/timestamp: \
 	C:/Users/user/Documents/qt_projects/head-unit/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/CMakeFiles/3.29.3/CMakeSystem.cmake \
 	C:/Users/user/Documents/qt_projects/head-unit/src/GearHMI.cpp \
 	C:/Users/user/Documents/qt_projects/head-unit/src/GearHMI.hpp \
+	C:/Users/user/Documents/qt_projects/head-unit/src/HeadUnitHMI.cpp \
+	C:/Users/user/Documents/qt_projects/head-unit/src/HeadUnitHMI.hpp \
 	C:/Users/user/Documents/qt_projects/head-unit/src/main.cpp \
 	C:/Users/user/Documents/qt_projects/head-unit/src/qml.qrc \
 	C:/Qt/Tools/CMake_64/bin/cmake.exe

@@ -33,3 +33,8 @@ void GearHMI::setIsGear(quint8 gear) {
 //          SETTER METHODS ENDS         *
 // **************************************
 
+void    GearHMI::doWork() {
+    _gear = 2;
+
+    emit isGearChanged();
+}

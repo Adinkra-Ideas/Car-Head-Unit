@@ -17,6 +17,9 @@ public:
     // setters
     void setIsGear(quint8 gear);
 
+public slots:
+    void doWork();
+
 signals:
     void        isGearChanged();
 

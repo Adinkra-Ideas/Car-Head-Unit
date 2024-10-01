@@ -39,6 +39,7 @@ else()
         add_executable(head-unit
           ${PROJECT_SOURCES}
           src/GearHMI.hpp src/GearHMI.cpp
+          src/HeadUnitHMI.hpp src/HeadUnitHMI.cpp
         )
     endif()
 endif()
