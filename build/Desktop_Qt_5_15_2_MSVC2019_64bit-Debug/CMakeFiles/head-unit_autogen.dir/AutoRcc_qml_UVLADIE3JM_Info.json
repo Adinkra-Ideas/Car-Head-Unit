@@ -1,0 +1,30 @@
+{
+	"BUILD_DIR" : "C:/Users/user/Documents/qt_projects/head-unit/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/head-unit_autogen",
+	"CMAKE_BINARY_DIR" : "C:/Users/user/Documents/qt_projects/head-unit/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug",
+	"CMAKE_CURRENT_BINARY_DIR" : "C:/Users/user/Documents/qt_projects/head-unit/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug",
+	"CMAKE_CURRENT_SOURCE_DIR" : "C:/Users/user/Documents/qt_projects/head-unit",
+	"CMAKE_SOURCE_DIR" : "C:/Users/user/Documents/qt_projects/head-unit",
+	"CROSS_CONFIG" : false,
+	"GENERATOR" : "Ninja",
+	"INCLUDE_DIR" : "C:/Users/user/Documents/qt_projects/head-unit/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/head-unit_autogen/include",
+	"INPUTS" : 
+	[
+		"C:/Users/user/Documents/qt_projects/head-unit/src/main.qml",
+		"C:/Users/user/Documents/qt_projects/head-unit/src/images/monitor.png",
+		"C:/Users/user/Documents/qt_projects/head-unit/src/images/home.png",
+		"C:/Users/user/Documents/qt_projects/head-unit/src/images/music.png",
+		"C:/Users/user/Documents/qt_projects/head-unit/src/images/selected_gear.gif",
+		"C:/Users/user/Documents/qt_projects/head-unit/src/images/HU_logo.gif"
+	],
+	"LOCK_FILE" : "C:/Users/user/Documents/qt_projects/head-unit/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/CMakeFiles/head-unit_autogen.dir/AutoRcc_qml_UVLADIE3JM_Lock.lock",
+	"MULTI_CONFIG" : false,
+	"OPTIONS" : [ "-name", "qml" ],
+	"OUTPUT_CHECKSUM" : "UVLADIE3JM",
+	"OUTPUT_NAME" : "qrc_qml.cpp",
+	"RCC_EXECUTABLE" : "C:/Qt/5.15.2/msvc2019_64/bin/rcc.exe",
+	"RCC_LIST_OPTIONS" : [ "--list" ],
+	"SETTINGS_FILE" : "C:/Users/user/Documents/qt_projects/head-unit/build/Desktop_Qt_5_15_2_MSVC2019_64bit-Debug/CMakeFiles/head-unit_autogen.dir/AutoRcc_qml_UVLADIE3JM_Used.txt",
+	"SOURCE" : "C:/Users/user/Documents/qt_projects/head-unit/src/qml.qrc",
+	"USE_BETTER_GRAPH" : false,
+	"VERBOSITY" : 0
+}

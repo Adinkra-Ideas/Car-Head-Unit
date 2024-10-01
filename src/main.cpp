@@ -1,5 +1,8 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
+#include <QQmlContext>
+
+#include "GearHMI.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -8,7 +11,12 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
+    GearHMI gearHMI = GearHMI(&app);
+
     QQmlApplicationEngine engine;
+    QQmlContext* rootContext = engine.rootContext();
+    rootContext->setContextProperty("gearHMI", &gearHMI);
+
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(
         &engine,
