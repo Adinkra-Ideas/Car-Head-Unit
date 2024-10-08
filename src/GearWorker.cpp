@@ -1,21 +1,26 @@
-#include "GearHMI.hpp"
+#include "GearWorker.hpp"
 
-GearHMI::GearHMI(QObject *parent) :
+GearWorker::GearWorker(quint8 & gear,
+            quint8 & mode,
+            quint8 & init,
+            QObject *parent) :
     QObject{parent},
-    _gear{0},
-    _mode{0},
-    _init{0} {
+    _gear{gear},
+    _mode{mode},
+    _init{init} {
     // init here
 }
 
-GearHMI::~GearHMI() {}
+
+GearWorker::~GearWorker() {}
 
 // **************************************
 //          GETTER METHODS BEGINS       *
 // **************************************
-quint8 GearHMI::isGear() const {
+quint8 GearWorker::isGear() const {
     return _gear;
 }
+
 // **************************************
 //          GETTER METHODS ENDS         *
 // **************************************
@@ -24,7 +29,7 @@ quint8 GearHMI::isGear() const {
 // **************************************
 //          SETTER METHODS BEGINS       *
 // **************************************
-void GearHMI::setIsGear(quint8 gear) {
+void GearWorker::setIsGear(quint8 gear) {
     _gear = gear;
 
     emit isGearChanged();
@@ -33,7 +38,7 @@ void GearHMI::setIsGear(quint8 gear) {
 //          SETTER METHODS ENDS         *
 // **************************************
 
-void    GearHMI::doWork() {
+void    GearWorker::doWork() {
     _gear = 2;
 
     emit isGearChanged();

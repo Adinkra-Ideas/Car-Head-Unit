@@ -38,8 +38,10 @@ else()
     else()
         add_executable(head-unit
           ${PROJECT_SOURCES}
-          src/GearHMI.hpp src/GearHMI.cpp
-          src/HeadUnitHMI.hpp src/HeadUnitHMI.cpp
+          src/GearWorker.hpp src/GearWorker.cpp
+          src/Gear.hpp src/Gear.cpp
+          src/Props.hpp src/Props.cpp
+          src/Car.hpp src/Car.cpp
         )
     endif()
 endif()

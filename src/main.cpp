@@ -2,7 +2,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 
-#include "GearHMI.hpp"
+#include "Gear.hpp"
+#include "GearWorker.hpp"
+#include "Car.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -11,11 +13,11 @@ int main(int argc, char *argv[])
 #endif
     QGuiApplication app(argc, argv);
 
-    GearHMI gearHMI = GearHMI(&app);
+    Car car(&app);
 
     QQmlApplicationEngine engine;
     QQmlContext* rootContext = engine.rootContext();
-    rootContext->setContextProperty("gearHMI", &gearHMI);
+    rootContext->setContextProperty("car", &car);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(
