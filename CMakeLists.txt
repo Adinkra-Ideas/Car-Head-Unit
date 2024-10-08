@@ -12,11 +12,12 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
 
-set(DIR src/)
+set(DIR src_CPP)
+set(QML src_QML)
 
 set(PROJECT_SOURCES
-        ${DIR}main.cpp
-        ${DIR}qml.qrc
+        ${DIR}/main.cpp
+        ${QML}/qml.qrc
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -38,10 +39,10 @@ else()
     else()
         add_executable(head-unit
           ${PROJECT_SOURCES}
-          src/GearWorker.hpp src/GearWorker.cpp
-          src/Gear.hpp src/Gear.cpp
-          src/Props.hpp src/Props.cpp
-          src/Car.hpp src/Car.cpp
+          ${DIR}/GearWorker.hpp ${DIR}/GearWorker.cpp
+          ${DIR}/Gear.hpp ${DIR}/Gear.cpp
+          ${DIR}/Props.hpp ${DIR}/Props.cpp
+          ${DIR}/Car.hpp ${DIR}/Car.cpp
         )
     endif()
 endif()
