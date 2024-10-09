@@ -25,9 +25,9 @@ signals:
     void    isGearChanged();
 
 protected:
-    quint8      _gear;  // current active gear
-    quint8      _mode;  // throttle value assigned to current active gear
-    quint8      _init;  // 0 if PCA9685 not yet init-ed, 1 if init-ed
+    quint8 & _gear;  // active gear
+    quint8   _mode;  // throttle value assigned to current active gear
+    quint8   _init;  // 0 if PCA9685 not yet init-ed, 1 if init-ed
 
     GearWorker  _gearWorker;
 

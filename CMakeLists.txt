@@ -12,12 +12,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Core Quick)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Core Quick)
 
-set(DIR src_CPP)
+set(C src_C)
+set(CPP src_CPP)
 set(QML src_QML)
 
 set(PROJECT_SOURCES
-        ${DIR}/main.cpp
+        ${CPP}/main.cpp
         ${QML}/qml.qrc
+#       ${C}/libpca9685.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -39,16 +41,19 @@ else()
     else()
         add_executable(head-unit
           ${PROJECT_SOURCES}
-          ${DIR}/GearWorker.hpp ${DIR}/GearWorker.cpp
-          ${DIR}/Gear.hpp ${DIR}/Gear.cpp
-          ${DIR}/Props.hpp ${DIR}/Props.cpp
-          ${DIR}/Car.hpp ${DIR}/Car.cpp
+          ${CPP}/GearWorker.hpp ${CPP}/GearWorker.cpp
+          ${CPP}/Gear.hpp ${CPP}/Gear.cpp
+          ${CPP}/Props.hpp ${CPP}/Props.cpp
+          ${CPP}/Car.hpp ${CPP}/Car.cpp
         )
     endif()
 endif()
 
+target_compile_options(head-unit PUBLIC -fPIC)
+target_link_options(head-unit PUBLIC -L./${C} -Wl,-rpath=.)
+
 target_link_libraries(head-unit
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick)
+  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick pca9685)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

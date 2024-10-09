@@ -2,7 +2,7 @@
 
 Gear::Gear(QObject *parent) :
         Props{},
-        _gear{0},
+        _gear{Props::gear_},
         _mode{0},
         _init{0},
         _gearWorker(_gear, _mode, _init),
