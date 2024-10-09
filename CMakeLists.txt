@@ -50,7 +50,7 @@ else()
 endif()
 
 target_compile_options(head-unit PUBLIC -fPIC)
-target_link_options(head-unit PUBLIC -L./${C} -Wl,-rpath=.)
+target_link_options(head-unit PUBLIC -L../${C} -Wl,-rpath=../${C})
 
 target_link_libraries(head-unit
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick pca9685)
