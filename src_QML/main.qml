@@ -70,7 +70,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    car.isGear = 0;
+                    car.setGearToP();
                 }
             }
         }
@@ -91,7 +91,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    car.isGear = 1;
+                    car.setGearToN();
                 }
             }
         }
@@ -112,7 +112,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    car.isGear = 2;
+                    car.setGearToD();
                 }
             }
         }
@@ -134,7 +134,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    car.isGear = 3;
+                    car.setGearToR();
                 }
             }
         }
