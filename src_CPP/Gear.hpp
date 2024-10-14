@@ -7,30 +7,35 @@
 #include "Props.hpp"
 #include "GearWorker.hpp"
 
-class Gear : public QObject, virtual public Props
+// uncomment
+// extern "C"
+// {
+// #include "../src_C/libpca9685.h"
+// }
+
+class Gear : virtual public Props
 {
-    Q_OBJECT
-    Q_PROPERTY(quint8 isGear READ isGear WRITE setGear NOTIFY isGearChanged)
     QThread theThread;
 
 public:
     explicit Gear(QObject *parent = nullptr);
     virtual ~Gear();
 
-    quint8  isGear() const;
-    void    setGear(quint8 gear);
+    void    abortThread();
 
-signals:
-    void    operate();
-    void    isGearChanged();
+    quint8  getGear() const override;
+    void    setGear(quint8 gear) override;
+
+    quint16 getSpeed() const override;
+    void    setSpeed(quint16 speed) override;
 
 protected:
-    quint8 & _gear;  // active gear
-    quint8   _mode;  // throttle value assigned to current active gear
-    quint8   _init;  // 0 if PCA9685 not yet init-ed, 1 if init-ed
+    quint8  & _gear;  // active gear
+    quint16   speed_; // current speed
+    quint8    _mode;  // throttle value assigned to current active gear
+    quint8    _init;  // 0 if PCA9685 not yet init-ed, 1 if init-ed
 
-    GearWorker  _gearWorker;
-
+    GearWorker  gearWorker_;
 };
 
 #endif // GEAR_HPP

@@ -6,5 +6,7 @@
         <file>images/home.png</file>
         <file>images/monitor.png</file>
         <file>images/music.png</file>
+        <file>images/boardBg.png</file>
+        <file>images/cameraView.gif</file>
     </qresource>
 </RCC>

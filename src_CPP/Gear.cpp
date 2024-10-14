@@ -1,37 +1,49 @@
 #include "Gear.hpp"
 
 Gear::Gear(QObject *parent) :
-        Props{},
+        Props{parent},
         _gear{Props::gear_},
+        speed_{0},
         _mode{0},
-        _init{0},
-        _gearWorker(_gear, _mode, _init),
-        QObject{parent}
+        // _init{0},
+        _init{1}, // for testing purpose
+        gearWorker_(this)
 {
-    _gearWorker.moveToThread(&theThread);
-    connect(this, &Gear::operate, &_gearWorker, &GearWorker::doWork);
-    connect(&_gearWorker, &GearWorker::isGearChanged, this, &Gear::isGearChanged);
-
-    // signals will be emitted from this in order to connect() with a method in thread
-    // more connect() can be added here depending on your needs
-    // Now we need to work on RPi to use the c lib grom gearHMI to manipulate speed
-    // Then we can now look into putting the construct of this that calls gearHMI into the thread by manipulating the object called from main()
+    gearWorker_.moveToThread(&theThread);
+    connect(this, &Props::operateGear, &gearWorker_, &GearWorker::doWork);
     theThread.start();
+
+    // uncomment
+    // // Initialize the Throttle HAL
+    // if (! begin_txv() /*ready_hut_hal()*/) {
+
+    //     if (! init_chip_on_0x60() /*init_throttle_mpu*/) {
+    //         _init = 1;
+    //     }
+
+    // }
+
+    emit operateGear();
 }
 
-Gear::~Gear() {
+Gear::~Gear() {}
+
+void    Gear::abortThread() {
+    gearWorker_.abortThread();
     theThread.quit();
     theThread.wait();
 }
 
-
 // **************************************
 //          GETTER METHODS BEGINS       *
 // **************************************
-quint8 Gear::isGear() const {
+quint8 Gear::getGear() const {
     return _gear;
 }
 
+quint16 Gear::getSpeed() const {
+    return speed_;
+}
 // **************************************
 //          GETTER METHODS ENDS         *
 // **************************************
@@ -41,7 +53,75 @@ quint8 Gear::isGear() const {
 //          SETTER METHODS BEGINS       *
 // **************************************
 void Gear::setGear(quint8 gear) {
+    // If throttle MPU is init-ed
+    if (! _init) { return ; }
+
     _gear = gear;
 
-    emit isGearChanged();
+    // set base speed for gear accordingly
+    switch (_gear) {
+        case 0: // P // use macro from lib to define cases
+            setSpeed(0);
+             // Head Unit Throttle Lib
+            break;
+        case 1: // N
+            setSpeed(0);
+            // speed_ = 0;
+            // hut_setSpeed(speed_, HUT_FWD);
+            break;
+        case 2: // D
+            setSpeed(400);
+            // speed_ = 400;
+            // hut_setSpeed(speed_, HUT_FWD);
+            break;
+        case 3: // R
+            setSpeed(400);
+            // speed_ = 400;
+            // hut_setSpeed(speed_, HUT_BKWD);
+            break;
+        default: // Unknown error
+            _gear = 0; // park car if unknown error occurs
+            setSpeed(0);
+            // speed_ = 0;
+            // hut_setSpeed(speed, HUT_FWD);
+    }
+
+    emit gearChanged();
+}
+
+// for testing purpose
+quint8 HUT_FWD = 0;
+quint8 HUT_BKWD = 0;
+static void hut_setSpeed(quint16, quint8) {}
+
+void   Gear::setSpeed(quint16 speed) {
+    // If throttle MPU is init-ed
+    if (! _init) { return; }
+
+    switch (_gear) {
+        case 0: // P // use macro from lib to define cases
+            speed_ = 0;
+            hut_setSpeed(speed_, HUT_FWD);
+            break;
+        case 1: // N // use macro from lib to define cases
+            speed_ = 0;
+            hut_setSpeed(speed_, HUT_FWD);
+            break;
+        case 2: // D // use macro from lib to define cases
+            if (speed > 4000) { return; }
+            speed_ = speed;
+            hut_setSpeed(speed_, HUT_FWD);
+            break;
+        case 3: // R // use macro from lib to define cases
+            if (speed > 700) { return; }
+            speed_ = speed;
+            hut_setSpeed(speed_, HUT_BKWD);
+            break;
+        default: // Unknown error
+            _gear = 0; // park car if unknown error occurs
+            speed_ = 0;
+            hut_setSpeed(speed_, HUT_FWD);
+    }
+
+    emit speedChanged();
 }

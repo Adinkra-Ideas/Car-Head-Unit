@@ -1,10 +1,10 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+#include <QObject>
 
-#include "Gear.hpp"
-#include "GearWorker.hpp"
 #include "Car.hpp"
+#include "Props.hpp"
 
 int main(int argc, char *argv[])
 {
@@ -14,10 +14,12 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
 
     Car car(&app);
-
     QQmlApplicationEngine engine;
     QQmlContext* rootContext = engine.rootContext();
     rootContext->setContextProperty("car", &car);
+
+    Props & props = car;
+    QObject::connect(&app, &QGuiApplication::aboutToQuit, &props, &Props::safeQuitAllThreads);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(
