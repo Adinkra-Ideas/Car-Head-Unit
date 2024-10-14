@@ -7,11 +7,10 @@
 #include "Props.hpp"
 #include "GearWorker.hpp"
 
-// uncomment
-// extern "C"
-// {
-// #include "../src_C/libpca9685.h"
-// }
+extern "C"
+{
+    #include "../src_C/aptc.h"
+}
 
 class Gear : virtual public Props
 {
@@ -33,7 +32,7 @@ protected:
     quint8  & _gear;  // active gear
     quint16   speed_; // current speed
     quint8    _mode;  // throttle value assigned to current active gear
-    quint8    _init;  // 0 if PCA9685 not yet init-ed, 1 if init-ed
+    bool      _init;  // false if PCA9685 not yet init-ed, true if init-ed
 
     GearWorker  gearWorker_;
 };

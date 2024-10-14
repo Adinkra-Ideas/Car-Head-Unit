@@ -25,7 +25,7 @@ public:
     virtual void    setSpeed(quint16 speed) = 0;
 
     virtual quint8  getSteering() const = 0;
-    virtual void    setSteering(quint8 steeringPos) = 0;
+    virtual void    setSteering(quint8 steer) = 0;
 
 signals:
     void    operateGear();

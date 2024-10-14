@@ -2,12 +2,19 @@
 
 Steering::Steering(QObject *parent) :
     Props{parent},
-    steeringPos_{184},
+    steering_{0},
+    init_{true}, //
     steeringWorker_(this)
 {
     steeringWorker_.moveToThread(&theThread);
     connect(this, &Props::operateSteering, &steeringWorker_, &SteeringWorker::doWork);
     theThread.start();
+    
+    if ( ! apsc_init() ) {
+        init_ = true;
+    }
+    
+    //apsc_setSteering(steer); // will be used to set lastKnownSteeringPosition
 
     // emit operateSteering();
 }
@@ -24,7 +31,7 @@ void    Steering::abortThread() {
 // //          GETTER METHODS BEGINS       *
 // // **************************************
 quint8 Steering::getSteering() const {
-    return steeringPos_;
+    return steering_;
 }
 // **************************************
 //          GETTER METHODS ENDS         *
@@ -34,7 +41,13 @@ quint8 Steering::getSteering() const {
 // **************************************
 //          SETTER METHODS BEGINS       *
 // **************************************
-void Steering::setSteering(quint8 steeringPos) {
-    steeringPos_ = steeringPos;
+void Steering::setSteering(quint8 steer) {
+    // If steering MPU is init-ed
+    if (! init_) { return ; }
+    if (steer > APSC_MAX_BEFORE_MAPPING) { return ; }
+    
+    steering_ = steer;
+    apsc_setSteering(steer);
+    
     emit steeringChanged();
 }

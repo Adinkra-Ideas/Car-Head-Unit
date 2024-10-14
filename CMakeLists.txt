@@ -19,7 +19,6 @@ set(QML src_QML)
 set(PROJECT_SOURCES
         ${CPP}/main.cpp
         ${QML}/qml.qrc
-#       ${C}/libpca9685.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -46,18 +45,16 @@ else()
           ${CPP}/Props.hpp ${CPP}/Props.cpp
           ${CPP}/Car.hpp ${CPP}/Car.cpp
           ${CPP}/Steering.hpp ${CPP}/Steering.cpp
-          src_CPP/SteeringWorker.hpp src_CPP/SteeringWorker.cpp
+          ${CPP}/SteeringWorker.hpp ${CPP}/SteeringWorker.cpp
         )
     endif()
 endif()
 
-# target_compile_options(head-unit PUBLIC -fPIC)
-# target_link_options(head-unit PUBLIC -L../${C} -Wl,-rpath=../${C})
+target_compile_options(head-unit PUBLIC -fPIC)
+target_link_options(head-unit PUBLIC -L../${C} -Wl,-rpath=../${C})
 
 target_link_libraries(head-unit
-  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick
-  #pca9685
-)
+  PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick aptc apsc)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

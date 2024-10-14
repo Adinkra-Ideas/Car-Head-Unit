@@ -3,9 +3,15 @@
 
 #include <QObject>
 #include <QThread>
+#include <QDebug>
 
 #include "Props.hpp"
 #include "SteeringWorker.hpp"
+
+extern "C"
+{
+    #include "../src_C/apsc.h"
+}
 
 class Steering : virtual public Props
 {
@@ -18,10 +24,11 @@ public:
     void    abortThread();
 
     quint8  getSteering() const override;
-    void    setSteering(quint8 steeringPos) override;
+    void    setSteering(quint8 steer) override;
 
 protected:
-    quint8          steeringPos_;
+    quint8          steering_;
+    bool            init_;  // false if PCA9685 not yet init-ed, true if init-ed
 
     SteeringWorker  steeringWorker_;
 };

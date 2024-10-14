@@ -16,7 +16,7 @@ Window {
     AnimatedImage {
         id: carLogo
         paused: (car.gear > 0) ? false : true;
-        source: (car.gear !== 2) ? "qrc:/images/HU_logo.gif" : "qrc:/images/cameraView.gif";
+        source: (car.gear < 2) ? "qrc:/images/HU_logo.gif" : "qrc:/images/cameraView.gif";
         anchors.top: parent.top;
         anchors.topMargin: -2;
         anchors.horizontalCenter: parent.horizontalCenter;
@@ -198,7 +198,7 @@ Window {
                 y: -(accelerateControl.handle.implicitHeight / 5)
                 parent: accelerateControl.handle
                 visible: accelerateControl.pressed
-                text: car.speed.toFixed(1) // accelerateControl.value.toFixed(1)
+                text: car.speed.toFixed(1) / 40 // 40 because 4000 AKA max speed of D gear, divided by 40 == 100%
                 delay: 100;
                 timeout: 0;
                 background: Rectangle { radius: 3; border.width: 1; opacity: 0.7 }
@@ -219,12 +219,14 @@ Window {
         anchors.bottom: wallFrameForSteering.bottom;
         anchors.bottomMargin: 25;
         anchors.horizontalCenter: parent.horizontalCenter;
+        
+        property alias steeringWheel: steeringWheel
 
         Dial {
             id: steeringWheel
-            from: 113.0;
+            from: 0.0;
             value: car.steering;
-            to: 255.0;
+            to: 140.0;
             snapMode: Dial.SnapAlways;
             stepSize: 1.0;
             palette.dark: "#1777B7"; //"red";

@@ -5,23 +5,16 @@ Gear::Gear(QObject *parent) :
         _gear{Props::gear_},
         speed_{0},
         _mode{0},
-        // _init{0},
-        _init{1}, // for testing purpose
+        _init{false},
         gearWorker_(this)
 {
     gearWorker_.moveToThread(&theThread);
     connect(this, &Props::operateGear, &gearWorker_, &GearWorker::doWork);
     theThread.start();
 
-    // uncomment
-    // // Initialize the Throttle HAL
-    // if (! begin_txv() /*ready_hut_hal()*/) {
-
-    //     if (! init_chip_on_0x60() /*init_throttle_mpu*/) {
-    //         _init = 1;
-    //     }
-
-    // }
+    if ( ! aptc_init() ) {
+        _init = true;
+    }
 
     // emit operateGear();
 }
@@ -62,37 +55,23 @@ void Gear::setGear(quint8 gear) {
     switch (_gear) {
         case 0: // P // use macro from lib to define cases
             setSpeed(0);
-             // Head Unit Throttle Lib
             break;
         case 1: // N
             setSpeed(0);
-            // speed_ = 0;
-            // hut_setSpeed(speed_, HUT_FWD);
             break;
         case 2: // D
             setSpeed(400);
-            // speed_ = 400;
-            // hut_setSpeed(speed_, HUT_FWD);
             break;
         case 3: // R
             setSpeed(400);
-            // speed_ = 400;
-            // hut_setSpeed(speed_, HUT_BKWD);
             break;
         default: // Unknown error
             _gear = 0; // park car if unknown error occurs
             setSpeed(0);
-            // speed_ = 0;
-            // hut_setSpeed(speed, HUT_FWD);
     }
 
     emit gearChanged();
 }
-
-// for testing purpose
-quint8 HUT_FWD = 0;
-quint8 HUT_BKWD = 0;
-static void hut_setSpeed(quint16, quint8) {}
 
 void   Gear::setSpeed(quint16 speed) {
     // If throttle MPU is init-ed
@@ -101,64 +80,27 @@ void   Gear::setSpeed(quint16 speed) {
     switch (_gear) {
         case 0: // P // use macro from lib to define cases
             speed_ = 0;
-            hut_setSpeed(speed_, HUT_FWD);
+            aptc_setSpeed(speed_, APTC_FWD);
             break;
         case 1: // N // use macro from lib to define cases
             speed_ = 0;
-            hut_setSpeed(speed_, HUT_FWD);
+            aptc_setSpeed(speed_, APTC_FWD);
             break;
         case 2: // D // use macro from lib to define cases
             if (speed > 4000) { return; }
             speed_ = speed;
-            hut_setSpeed(speed_, HUT_FWD);
+            aptc_setSpeed(speed_, APTC_FWD);
             break;
         case 3: // R // use macro from lib to define cases
             if (speed > 700) { return; }
             speed_ = speed;
-            hut_setSpeed(speed_, HUT_BKWD);
+            aptc_setSpeed(speed_, APTC_BKWD);
             break;
         default: // Unknown error
             _gear = 0; // park car if unknown error occurs
             speed_ = 0;
-            hut_setSpeed(speed_, HUT_FWD);
+            aptc_setSpeed(speed_, APTC_FWD);
     }
 
     emit speedChanged();
 }
-
-// //
-// void	Gear::setGearToP() {
-//     // If throttle MPU is init-ed, and vehicle is at a standstill
-//     if (_init && ! wheelSpeed_) {
-//         p_gear_control(&_gear, &clutch_);
-//         emit isGearChanged();
-//     }
-// }
-
-// //
-// void	Gear::setGearToN() {
-//     // If throttle MPU is init-ed
-//     if (_init) {
-//         n_gear_control(&_gear, &clutch_);
-//         emit isGearChanged();
-//     }
-// }
-
-// //
-// void    Gear::setGearToD() {
-//     // If throttle MPU is init-ed, and vehicle is at a standstill
-//     if (_init && ! wheelSpeed_) {
-//         d_gear_control(&_gear, &clutch_);
-//         emit isGearChanged();
-//     }
-// }
-
-// //
-// void	Gear::setGearToR() {
-//     // If throttle MPU is init-ed, and vehicle is at a standstill
-//     if (_init && ! wheelSpeed_) {
-//         r_gear_control(&_gear, &clutch_);
-//         emit isGearChanged();
-//     }
-// }
-
