@@ -8,8 +8,8 @@
  *
  */
 
-#ifndef REAR_WHEEL_H
-#define REAR_WHEEL_H
+#ifndef LIBPCA9685_H
+#define LIBPCA9685_H
 
 #include <fcntl.h>      //open
 #include <sys/ioctl.h>  //ioctl
@@ -35,8 +35,8 @@ static const uint8_t N_GEAR = 1;
 static const uint8_t D_GEAR = 2;
 static const uint8_t R_GEAR = 3;
 
-static const uint8_t MAX_FWD_GEAR = 7;
-static const uint8_t MAX_BKW_GEAR = 2;
+static const uint8_t MAX_FWD_GEAR_CLUTCH = 7;
+static const uint8_t MAX_BKW_GEAR_CLUTCH = 2;
 
 // Directions
 static const uint8_t FORWARD = 0;
@@ -48,12 +48,12 @@ void    init_write(const uint8_t * reg);
 uint8_t write_data(const uint8_t *buf, const uint8_t len);
 uint8_t read_m(uint8_t *read_buf, const uint8_t len);
 void    manual_gear(const uint8_t gear, const uint8_t direction);
-void	p_gear_control(uint8_t * gear);
-void	n_gear_control(uint8_t * gear);
-void	d_gear_control(uint8_t * gear);
-void	r_gear_control(uint8_t * gear);
-void	accelerate_forward(uint8_t * gear);
-void	accelerate_backward(uint8_t * gear);
+void	p_gear_control(uint8_t * gear, uint8_t * gearClutch);
+void	n_gear_control(uint8_t * gear, uint8_t * gearClutch);
+void	d_gear_control(uint8_t * gear, uint8_t * gearClutch);
+void	r_gear_control(uint8_t * gear, uint8_t * gearClutch);
+void	accelerate_forward(uint8_t * gearClutch);
+void	accelerate_backward(uint8_t * gearClutch);
 
 
-#endif //REAR_WHEEL_H
+#endif //LIBPCA9685_H

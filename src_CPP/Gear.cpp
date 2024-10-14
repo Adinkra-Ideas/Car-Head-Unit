@@ -3,7 +3,12 @@
 Gear::Gear(QObject *parent) :
         Props{parent},
         _gear{Props::gear_},
+<<<<<<< HEAD
         speed_{0},
+=======
+        clutch_{0},
+        wheelSpeed_{0},
+>>>>>>> 459021e95ec89256e1383440028915b8be95ade7
         _mode{0},
         // _init{0},
         _init{1}, // for testing purpose
@@ -12,6 +17,7 @@ Gear::Gear(QObject *parent) :
     gearWorker_.moveToThread(&theThread);
     connect(this, &Props::operateGear, &gearWorker_, &GearWorker::doWork);
     theThread.start();
+<<<<<<< HEAD
 
     // uncomment
     // // Initialize the Throttle HAL
@@ -24,6 +30,18 @@ Gear::Gear(QObject *parent) :
     // }
 
     emit operateGear();
+=======
+    
+    // Initialize the Throttle HAL
+    if (! begin_txv() /*ready_throttle_hal()*/) {
+                
+        if (! init_chip_on_0x60() /*init_throttle_mpu*/) {
+            _init = 1;
+        }
+        
+    }
+    
+>>>>>>> 459021e95ec89256e1383440028915b8be95ade7
 }
 
 Gear::~Gear() {}
@@ -125,3 +143,40 @@ void   Gear::setSpeed(quint16 speed) {
 
     emit speedChanged();
 }
+
+//
+void	Gear::setGearToP() {
+    // If throttle MPU is init-ed, and vehicle is at a standstill
+    if (_init && ! wheelSpeed_) {
+        p_gear_control(&_gear, &clutch_);
+        emit isGearChanged();
+    }
+}
+
+//
+void	Gear::setGearToN() {
+    // If throttle MPU is init-ed
+    if (_init) {
+        n_gear_control(&_gear, &clutch_);
+        emit isGearChanged();
+    }
+}
+
+//
+void    Gear::setGearToD() {
+    // If throttle MPU is init-ed, and vehicle is at a standstill
+    if (_init && ! wheelSpeed_) {
+        d_gear_control(&_gear, &clutch_);
+        emit isGearChanged();
+    }
+}
+
+//
+void	Gear::setGearToR() {
+    // If throttle MPU is init-ed, and vehicle is at a standstill
+    if (_init && ! wheelSpeed_) {
+        r_gear_control(&_gear, &clutch_);
+        emit isGearChanged();
+    }
+}
+

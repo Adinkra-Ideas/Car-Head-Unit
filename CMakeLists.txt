@@ -51,8 +51,13 @@ else()
     endif()
 endif()
 
+<<<<<<< HEAD
 # target_compile_options(head-unit PUBLIC -fPIC)
 # target_link_options(head-unit PUBLIC -L../${C} -Wl,-rpath=../${C})
+=======
+target_compile_options(head-unit PUBLIC -fPIC)
+target_link_options(head-unit PUBLIC -L../${C} -Wl,-rpath=../${C})
+>>>>>>> 459021e95ec89256e1383440028915b8be95ade7
 
 target_link_libraries(head-unit
   PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick
