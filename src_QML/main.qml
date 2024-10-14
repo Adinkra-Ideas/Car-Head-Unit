@@ -83,11 +83,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-<<<<<<< HEAD
                     car.gear = 0;
-=======
-                    car.setGearToP();
->>>>>>> 459021e95ec89256e1383440028915b8be95ade7
                 }
             }
         }
@@ -108,11 +104,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-<<<<<<< HEAD
                     car.gear = 1;
-=======
-                    car.setGearToN();
->>>>>>> 459021e95ec89256e1383440028915b8be95ade7
                 }
             }
         }
@@ -133,11 +125,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-<<<<<<< HEAD
                     car.gear = 2;
-=======
-                    car.setGearToD();
->>>>>>> 459021e95ec89256e1383440028915b8be95ade7
                 }
             }
         }
@@ -159,11 +147,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-<<<<<<< HEAD
                     car.gear = 3;
-=======
-                    car.setGearToR();
->>>>>>> 459021e95ec89256e1383440028915b8be95ade7
                 }
             }
         }

@@ -9,7 +9,7 @@ Steering::Steering(QObject *parent) :
     connect(this, &Props::operateSteering, &steeringWorker_, &SteeringWorker::doWork);
     theThread.start();
 
-    emit operateSteering();
+    // emit operateSteering();
 }
 
 Steering::~Steering() {}
