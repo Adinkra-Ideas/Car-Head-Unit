@@ -6,7 +6,14 @@
         <file>images/home.png</file>
         <file>images/monitor.png</file>
         <file>images/music.png</file>
-        <file>images/boardBg.png</file>
         <file>images/cameraView.gif</file>
+        <file>images/boardBg2.png</file>
+        <file>images/musicSpin.gif</file>
+        <file>images/artist.png</file>
+        <file>images/musicIco/next.png</file>
+        <file>images/musicIco/pause.png</file>
+        <file>images/musicIco/play.png</file>
+        <file>images/musicIco/prev.png</file>
+        <file>images/piano.mp3</file>
     </qresource>
 </RCC>

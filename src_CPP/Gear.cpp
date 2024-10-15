@@ -5,16 +5,18 @@ Gear::Gear(QObject *parent) :
         _gear{Props::gear_},
         speed_{0},
         _mode{0},
-        _init{false},
+        // _init{false}, // zzz
+        _init{true},
         gearWorker_(this)
 {
     gearWorker_.moveToThread(&theThread);
     connect(this, &Props::operateGear, &gearWorker_, &GearWorker::doWork);
     theThread.start();
 
-    if ( ! aptc_init() ) {
-        _init = true;
-    }
+    // zzz
+    // if ( ! aptc_init() ) {
+    //     _init = true;
+    // }
 
     // emit operateGear();
 }
@@ -80,26 +82,26 @@ void   Gear::setSpeed(quint16 speed) {
     switch (_gear) {
         case 0: // P // use macro from lib to define cases
             speed_ = 0;
-            aptc_setSpeed(speed_, APTC_FWD);
+            // aptc_setSpeed(speed_, APTC_FWD);
             break;
         case 1: // N // use macro from lib to define cases
             speed_ = 0;
-            aptc_setSpeed(speed_, APTC_FWD);
+            // aptc_setSpeed(speed_, APTC_FWD);
             break;
         case 2: // D // use macro from lib to define cases
             if (speed > 4000) { return; }
             speed_ = speed;
-            aptc_setSpeed(speed_, APTC_FWD);
+            // aptc_setSpeed(speed_, APTC_FWD);
             break;
         case 3: // R // use macro from lib to define cases
             if (speed > 700) { return; }
             speed_ = speed;
-            aptc_setSpeed(speed_, APTC_BKWD);
+            // aptc_setSpeed(speed_, APTC_BKWD);
             break;
         default: // Unknown error
             _gear = 0; // park car if unknown error occurs
             speed_ = 0;
-            aptc_setSpeed(speed_, APTC_FWD);
+            // aptc_setSpeed(speed_, APTC_FWD);
     }
 
     emit speedChanged();

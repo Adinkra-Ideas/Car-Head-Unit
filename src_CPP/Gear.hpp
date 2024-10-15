@@ -7,10 +7,11 @@
 #include "Props.hpp"
 #include "GearWorker.hpp"
 
-extern "C"
-{
-    #include "../src_C/aptc.h"
-}
+// zzz
+// extern "C"
+// {
+//     #include "../src_C/aptc.h"
+// }
 
 class Gear : virtual public Props
 {

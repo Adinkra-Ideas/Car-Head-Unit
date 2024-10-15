@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
 import QtGraphicalEffects 1.15
+import QtMultimedia 5.15
 
 Window {
     id: root
@@ -13,22 +14,138 @@ Window {
     visible: true
     title: qsTr("Head Unit")
 
-    AnimatedImage {
-        id: carLogo
-        paused: (car.gear > 0) ? false : true;
-        source: (car.gear < 2) ? "qrc:/images/HU_logo.gif" : "qrc:/images/cameraView.gif";
+    // For Dropping the Shadow
+    Rectangle {
+        id: changingBg
+        width: root.width * 0.4885
+        height: 225
+        color: root.color
         anchors.top: parent.top;
         anchors.topMargin: -2;
         anchors.horizontalCenter: parent.horizontalCenter;
     }
     DropShadow {
-        anchors.fill: carLogo
+        anchors.fill: changingBg
         horizontalOffset: 0
         verticalOffset: 0
         radius: 12.0
         samples: 25
         color: "#1777B7"
-        source: carLogo
+        source: changingBg
+    }
+
+    // 1
+    AnimatedImage {
+        id: carLogo
+        width: changingBg.width
+        height: changingBg.height
+        visible: false
+        paused: (car.gear > 0) ? false : true;
+        source: (car.gear < 2) ? "qrc:/images/HU_logo.gif" : "qrc:/images/cameraView.gif";
+        anchors.fill: changingBg
+    }
+
+    // 2
+    Rectangle {
+        id: musicPlayer
+        width: changingBg.width
+        height: changingBg.height
+        visible: true
+        anchors.fill: changingBg
+        color: "transparent"
+        AnimatedImage {
+            id: musicSpin
+            width: parent.width * 0.4
+            height: parent.width * 0.4
+            paused: (playMusic.playbackState === MediaPlayer.PlayingState) ? false : true;
+            source: "qrc:/images/musicSpin.gif"
+            anchors.left: parent.left;
+            anchors.leftMargin: changingBg.width * 0.026;
+            anchors.verticalCenter: parent.verticalCenter;
+        }
+        Rectangle {
+            id: playProps
+            width: parent.width * 0.5
+            anchors.top: musicSpin.top;
+            anchors.bottom: musicSpin.bottom;
+            anchors.left: musicSpin.right;
+            anchors.leftMargin: changingBg.width * 0.026;
+            // color: "green"
+            color: "transparent"
+            Text {
+                id: songTitle
+                color: "#FFFFFF";
+                text: "All I have to do is dream";
+                font.pointSize: playProps.width * 0.064;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                anchors.top: playProps.top;
+            }
+            Text {
+                id: artistName
+                color: "#1777B7";
+                text: "The Everly Brothers";
+                font.pointSize: playProps.width * 0.0427;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                anchors.top: songTitle.bottom;
+                anchors.topMargin: 5
+            }
+            Image {
+                id: artistImage
+                source: "qrc:/images/artist.png";
+                width: playProps.width * 0.267;
+                height: playProps.width * 0.267;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                anchors.top: artistName.bottom;
+                anchors.topMargin: 10
+            }
+            Image {
+                id: playPauseIco
+                source: (playMusic.playbackState === MediaPlayer.PlayingState) ? "qrc:/images/musicIco/pause.png" : "qrc:/images/musicIco/play.png";
+                width: playProps.width * 0.16;
+                height: playProps.width * 0.16;
+                anchors.horizontalCenter: parent.horizontalCenter;
+                anchors.bottom: playProps.bottom;
+                anchors.bottomMargin: 5
+                MouseArea {
+                    id: playPause
+                    anchors.fill: parent
+                    onPressed:  {
+                        (playMusic.playbackState === MediaPlayer.PlayingState) ? playMusic.pause() : playMusic.play();
+                    }
+
+                }
+            }
+            Image {
+                id: prevIco
+                source: "qrc:/images/musicIco/prev.png";
+                width: playProps.width * 0.16;
+                height: playProps.width * 0.16;
+                anchors.left: parent.left;
+                anchors.leftMargin: 10
+                anchors.bottom: playPauseIco.bottom;
+            }
+            Image {
+                id: nextIco
+                source: "qrc:/images/musicIco/next.png";
+                width: playProps.width * 0.16;
+                height: playProps.width * 0.16;
+                anchors.right: parent.right;
+                anchors.rightMargin: 10
+                anchors.bottom: playPauseIco.bottom;
+            }
+        }
+
+        // property alias playMusic: playMusic
+        MediaPlayer {
+            id: playMusic
+            audioRole: Audio.MusicRole
+            // source: "file:///Users/user/Downloads/ttt.mp3"
+            source: "qrc:/images/piano.mp3";
+            autoPlay: false
+            loops: 1
+            muted: false
+            volume: 1
+        }
     }
 
     // NavBar
@@ -269,7 +386,7 @@ Window {
 
     Image {
         id: wallFrameForSteering
-        source: "qrc:/images/boardBg.png";
+        source: "qrc:/images/boardBg2.png";
         width: 750;
         height: 69;
         anchors.bottom: parent.bottom;

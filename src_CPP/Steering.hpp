@@ -8,10 +8,11 @@
 #include "Props.hpp"
 #include "SteeringWorker.hpp"
 
-extern "C"
-{
-    #include "../src_C/apsc.h"
-}
+// zzz
+// extern "C"
+// {
+//     #include "../src_C/apsc.h"
+// }
 
 class Steering : virtual public Props
 {
