@@ -1,0 +1,32 @@
+
+name: Unit/Module Tests for aivector Class
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ./build
+
+jobs:
+  tests_job:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+        cmake-version: '3.16.x'
+    - name: Run cmake
+      run: cmake --version
+    - name: Run multi cmd
+      run: |
+        echo hello
+        echo hi there
+
+
