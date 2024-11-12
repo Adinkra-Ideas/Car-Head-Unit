@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
 
     Car car(&app);
     QQmlContext * rootContext = engine.rootContext();
-    rootContext->setContextProperty("car", &car);
+    rootContext->setContextProperty("Car", &car);
 
     Props & props = car;
     QObject::connect(&app, &QGuiApplication::aboutToQuit, &props, &Props::safeQuitAllThreads);

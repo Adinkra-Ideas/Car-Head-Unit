@@ -16,7 +16,7 @@ Item {
 
         property int delegateHeight: 40
 
-        model: Media.audiopaths
+        model: Car.audiopaths
         delegate: Item {
             width: parent.width
             height: theListView.delegateHeight
@@ -28,8 +28,8 @@ Item {
             MouseArea {
                 anchors.fill : parent
                 onClicked: {
-                    Media.activeMedia = modelData
-                    Media.audio = MediaPlayer.PlayingState
+                    Car.activeMedia = modelData
+                    Car.audio = MediaPlayer.PlayingState
                 }
             }
         }

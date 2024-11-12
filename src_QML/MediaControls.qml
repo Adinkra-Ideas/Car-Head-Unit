@@ -35,7 +35,7 @@ Rectangle {
                     id: prevPlay
                     anchors.fill: parent
                     onPressed: {
-                        Media.change = false
+                        Car.change = false
                     }
                 }
             }
@@ -44,7 +44,7 @@ Rectangle {
             Layout.fillWidth: true;
             Layout.fillHeight: true;
             Image {
-                source: (Media.audio === MediaPlayer.PlayingState) ? "images/musicIco/pause.png" : "images/musicIco/play.png"
+                source: (Car.audio === MediaPlayer.PlayingState) ? "images/musicIco/pause.png" : "images/musicIco/play.png"
                 width: 40
                 height: 40
                 anchors.centerIn: parent
@@ -53,7 +53,7 @@ Rectangle {
                     id: playPause
                     anchors.fill: parent
                     onPressed: {
-                        Media.audio = (Media.audio === MediaPlayer.PlayingState) ? MediaPlayer.PausedState : MediaPlayer.PlayingState
+                        Car.audio = (Car.audio === MediaPlayer.PlayingState) ? MediaPlayer.PausedState : MediaPlayer.PlayingState
                     }
                 }
             }
@@ -72,7 +72,7 @@ Rectangle {
                     id: nextPlay
                     anchors.fill: parent
                     onPressed: {
-                        Media.change = true
+                        Car.change = true
                     }
                 }
             }
@@ -82,7 +82,7 @@ Rectangle {
             Layout.fillWidth: true;
             Layout.fillHeight: true;
             Image {
-                source: Media.repeat == 0 ? "images/musicIco/loop.png" : Media.repeat == 1 ? "images/musicIco/loop1.png" : Media.repeat == 2 ? "images/musicIco/loop2.png" : ""
+                source: Car.repeat == 0 ? "images/musicIco/loop.png" : Car.repeat == 1 ? "images/musicIco/loop1.png" : Car.repeat == 2 ? "images/musicIco/loop2.png" : ""
                 width: 30
                 height: 30
                 anchors.centerIn: parent
@@ -91,10 +91,10 @@ Rectangle {
                     id: changeRepeatMode
                     anchors.fill: parent
                     onPressed: {
-                        if (Media.repeat < 2) {
-                            Media.repeat += 1
+                        if (Car.repeat < 2) {
+                            Car.repeat += 1
                         } else {
-                            Media.repeat = 0
+                            Car.repeat = 0
                         }
                     }
                 }

@@ -3,7 +3,15 @@
 
 #include <QObject>
 #include <QDebug>
-// #include <QQmlEngine>
+#include <QAudioOutput> /*** ***/
+#include <QMediaPlayer> /*** ***/
+#include <QStringList>  /*** ***/
+#include <QString>      /*** ***/
+#include <QUrl>         /*** ***/
+#include <QVariant>         /*** ***/
+#include <QQmlListProperty> /*** ***/
+#include <QMediaMetaData>   /*** ***/
+#include <Qt>               /*** ***/
 
 class Props : public QObject
 {
@@ -11,7 +19,19 @@ class Props : public QObject
     Q_PROPERTY(quint8 gear READ getGear WRITE setGear NOTIFY gearChanged)
     Q_PROPERTY(quint16 speed READ getSpeed WRITE setSpeed NOTIFY speedChanged)
     Q_PROPERTY(quint8 steering READ getSteering WRITE setSteering NOTIFY steeringChanged)
-    // QML_ELEMENT
+    /*** ***/
+    // Q_PROPERTY(QMediaPlayer::PlaybackState audio READ getAudio WRITE setAudio NOTIFY playingChanged) // rename to getCurrAudio
+    Q_PROPERTY(QString mp_currDir /*READ getDir*/ WRITE mp_addDir /*NOTIFY dirChanged*/)
+    // Q_PROPERTY(bool change WRITE changePlay NOTIFY playingChanged) // prevOrNext
+    // Q_PROPERTY(QString title READ getTitle NOTIFY mmetaDataChanged)
+    // Q_PROPERTY(QString author READ getAuthor NOTIFY mmetaDataChanged)
+    // Q_PROPERTY(QStringList audiopaths READ getAudioPaths NOTIFY audioPathsChanged)
+    // Q_PROPERTY(QString activeMedia WRITE chooseActiveMedia NOTIFY playingChanged)
+    // Q_PROPERTY(bool intervalStatus READ getIntervalStatus WRITE setIntervalStatus NOTIFY intervalStatusChanged)
+    // Q_PROPERTY(qint16 lapCount WRITE setLapCount)
+    // Q_PROPERTY(qint16 lapDuration WRITE setLapDuration)
+    // Q_PROPERTY(qint16 restDuration WRITE setRestDuration)
+    // Q_PROPERTY(quint8 repeat READ getRepeat WRITE setRepeat NOTIFY repeatChanged)
 
 public:
     explicit    Props(QObject *parent = nullptr);
@@ -28,6 +48,31 @@ public:
     virtual quint8  getSteering() const = 0;
     virtual void    setSteering(quint8 steer) = 0;
 
+    /////////////////////////////////////////////////////
+    void mp_playHasChanged(QMediaPlayer::PlaybackState newState);
+    void mp_refreshMetadata();
+
+    virtual void    mp_addDir(QUrl path) = 0;
+
+    // void chooseActiveMedia(QString path);
+    // void appStateChanged(Qt::ApplicationState state);
+    // virtual void setAudio(QMediaPlayer::PlaybackState newState) = 0;
+    // virtual QMediaPlayer::PlaybackState getAudio() const = 0;
+
+    // virtual QString getDir() const = 0;
+    // virtual void    changePlay(bool move) = 0;
+    // QString getTitle();
+    // QString getAuthor();
+    // QStringList getAudioPaths();
+    // void    setRepeat(quint8 val);
+    // quint8  getRepeat();
+    // virtual void setIntervalStatus(bool flag) = 0;
+    // virtual bool getIntervalStatus() = 0;
+    // virtual void setLapCount(qint16 newValue) = 0;
+    // virtual void setLapDuration(qint16 newValue) = 0;
+    // virtual void setRestDuration(qint16 newValue) = 0;
+    /////////////////////////////////////////////////////
+
 signals:
     void    operateGear();
     void    gearChanged();
@@ -35,6 +80,15 @@ signals:
 
     void    operateSteering();
     void    steeringChanged();
+
+    // void playingChanged();
+    // void dirChanged();
+    // void mmetaDataChanged();
+    // void audioPathsChanged();
+    // void thePrintout();
+    // void intervalStatusChanged();
+    // void repeatChanged();
+    // void startrThread();
 
 private:
     // Prevent all the constructors and operators below
@@ -46,6 +100,18 @@ private:
 
 protected:
     quint8      gear_;  // active gear
+
+    QMediaPlayer     * mp_player_;
+    QAudioOutput     * mp_audioOutput_;
+    QStringList         mp_audioPaths_;    // holds all the mp3 files found in directory selected by the user for media search
+    QStringList::iterator    mp_audIt_;  // iterator to audioPaths_
+    // QStringList           videoPaths_;
+    // QStringList::iterator       vpIt_; // iterator to videoPaths_
+    QString                mp_currDir_;  // Dir selected by the user, from where media files was last added
+    // QString           activeFilename_; // filename being played. could be a video or audio
+    // QVariant                  author_; // Holds the Author metadata for active media
+    // QVariant                   title_; // Holds the Title metadata for active media
+    quint8                  mp_repeat_; // 0 == repeat none, 1 == repeat 1, 2 == repeat all
 };
 
 

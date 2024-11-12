@@ -5,8 +5,12 @@
 
 #include "Gear.hpp"
 #include "Steering.hpp"
+#include "MediaDirectory.hpp"
 
-class Car : public Gear, public Steering
+class Car :
+            public Gear,
+            public Steering,
+            public MediaDirectory
 {
 public:
     explicit Car(QObject * parent = nullptr);

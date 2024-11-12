@@ -42,8 +42,8 @@ Window {
         width: changingBg.width
         height: changingBg.height
         visible: true
-        paused: (car.gear > 0) ? false : true;
-        source: (car.gear < 2) ? "images/HU_logo.gif" : "images/cameraView.gif";
+        paused: (Car.gear > 0) ? false : true;
+        source: (Car.gear < 2) ? "images/HU_logo.gif" : "images/cameraView.gif";
         anchors.fill: changingBg
     }
 
@@ -146,10 +146,10 @@ Window {
         AnimatedImage {
             width: 48;
             height: 30;
-            paused: (car.gear === 0) ? false : true;
-            source: (car.gear === 0) ? "images/selected_gear.gif" : "";
+            paused: (Car.gear === 0) ? false : true;
+            source: (Car.gear === 0) ? "images/selected_gear.gif" : "";
             Text {
-                color: (car.gear === 0) ? "#FF3131" : "#3B3200";
+                color: (Car.gear === 0) ? "#FF3131" : "#3B3200";
                 text: "P";
                 width: 50;
                 height: 50;
@@ -160,17 +160,17 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    car.gear = 0;
+                    Car.gear = 0;
                 }
             }
         }
         AnimatedImage {
             width: 48;
             height: 30;
-            paused: (car.gear === 1) ? false : true;
-            source: (car.gear === 1) ? "images/selected_gear.gif" : "";
+            paused: (Car.gear === 1) ? false : true;
+            source: (Car.gear === 1) ? "images/selected_gear.gif" : "";
             Text {
-                color: (car.gear === 1) ? "#FF3131" : "#3B3200";
+                color: (Car.gear === 1) ? "#FF3131" : "#3B3200";
                 text: "N";
                 width: 50;
                 height: 50;
@@ -181,17 +181,17 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    car.gear = 1;
+                    Car.gear = 1;
                 }
             }
         }
         AnimatedImage {
             width: 48;
             height: 30;
-            paused: (car.gear === 2) ? false : true;
-            source: (car.gear === 2) ? "images/selected_gear.gif" : "";
+            paused: (Car.gear === 2) ? false : true;
+            source: (Car.gear === 2) ? "images/selected_gear.gif" : "";
             Text {
-                color: (car.gear === 2) ? "#FF3131" : "#3B3200";
+                color: (Car.gear === 2) ? "#FF3131" : "#3B3200";
                 text: "D";
                 width: 50;
                 height: 50;
@@ -202,18 +202,18 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    car.gear = 2;
+                    Car.gear = 2;
                 }
             }
         }
         AnimatedImage {
             width: 48;
             height: 30;
-            paused: (car.gear === 3) ? false : true;
-            source: (car.gear === 3) ? "images/selected_gear.gif" : "";
+            paused: (Car.gear === 3) ? false : true;
+            source: (Car.gear === 3) ? "images/selected_gear.gif" : "";
 
             Text {
-                color: (car.gear === 3) ? "#FF3131" : "#3B3200";
+                color: (Car.gear === 3) ? "#FF3131" : "#3B3200";
                 text: "R";
                 width: 50;
                 height: 50;
@@ -224,7 +224,7 @@ Window {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    car.gear = 3;
+                    Car.gear = 3;
                 }
             }
         }
@@ -239,13 +239,13 @@ Window {
         anchors.rightMargin: 60;
         anchors.verticalCenter: steeringWheel.verticalCenter;
         from: 0
-        value: car.speed;
+        value: Car.speed;
         to: 4000;
         snapMode: Slider.SnapAlways;
         stepSize: 1.0;
         orientation: Qt.Vertical
         onMoved: {
-            car.speed = accelerateControl.value;
+            Car.speed = accelerateControl.value;
         }
         background: Rectangle {
             x: (accelerateControl.width  - width) / 2
@@ -275,7 +275,7 @@ Window {
                 y: -(accelerateControl.handle.implicitHeight / 5)
                 parent: accelerateControl.handle
                 visible: accelerateControl.pressed
-                text: car.speed.toFixed(1) / 40 // 40 because 4000 AKA max speed of D gear, divided by 40 == 100%
+                text: Car.speed.toFixed(1) / 40 // 40 because 4000 AKA max speed of D gear, divided by 40 == 100%
                 delay: 100;
                 timeout: 0;
                 background: Rectangle { radius: 3; border.width: 1; opacity: 0.7 }
@@ -292,12 +292,12 @@ Window {
         anchors.bottomMargin: 35;
         anchors.right: parent.horizontalCenter;
         from: 0.0;
-        value: car.steering;
+        value: Car.steering;
         to: 140.0;
         snapMode: Dial.SnapAlways;
         stepSize: 1.0;
         onMoved: {
-            car.steering = steeringWheel.value;
+            Car.steering = steeringWheel.value;
         }
         background: Rectangle {
             x: steeringWheel.width / 2 - width / 2

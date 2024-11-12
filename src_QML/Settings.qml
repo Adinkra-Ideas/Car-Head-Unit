@@ -26,7 +26,7 @@ ColumnLayout {
         id: lapCountComponent
         Layout.preferredWidth: parent.width
         Layout.preferredHeight: 42
-        opacity: !Media.intervalStatus
+        opacity: !Car.intervalStatus
         Text {
             id: lapCountText
             text: "Lap Count: (Secs)"
@@ -68,7 +68,7 @@ ColumnLayout {
         id: lapDurationComponent
         Layout.preferredWidth: parent.width
         Layout.preferredHeight: 42
-        opacity: !Media.intervalStatus
+        opacity: !Car.intervalStatus
         Text {
             id: lapDurText
             text: "Duration for each Lap: (Secs)"
@@ -110,7 +110,7 @@ ColumnLayout {
         id: restDurationComponent
         Layout.preferredWidth: parent.width
         Layout.preferredHeight: 42
-        opacity: !Media.intervalStatus
+        opacity: !Car.intervalStatus
         Text {
             id: restDurText
             text: "Rest: (Secs)"
@@ -155,17 +155,17 @@ ColumnLayout {
             id: startStop
             font.pointSize: 12
             y: 10
-            checked: Media.intervalStatus
+            checked: Car.intervalStatus
             onClicked: {
                 if (startStop.checked) {
                     // pass values of all three to CPP
-                    Media.lapCount = lapCount.value
-                    Media.lapDuration = lapDuration.value
-                    Media.restDuration = restDuration.value
+                    Car.lapCount = lapCount.value
+                    Car.lapDuration = lapDuration.value
+                    Car.restDuration = restDuration.value
 
-                    Media.intervalStatus = true;
+                    Car.intervalStatus = true;
                 } else {
-                    Media.intervalStatus = false;
+                    Car.intervalStatus = false;
                 }
             }
 

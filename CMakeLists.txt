@@ -5,7 +5,14 @@ project(head_unit VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(Qt6 6.5 REQUIRED COMPONENTS Multimedia Quick Qml)
+find_package(Qt6 6.5 REQUIRED COMPONENTS
+    Multimedia
+    Quick
+    Qml
+    Core
+    QuickControls2
+    SpatialAudio
+)
 
 set(C src_C)
 set(CPP src_CPP)
@@ -35,6 +42,7 @@ qt_add_qml_module(apphead_unit
         ${CPP}/Car.hpp ${CPP}/Car.cpp
         ${CPP}/Steering.hpp ${CPP}/Steering.cpp
         ${CPP}/SteeringWorker.hpp ${CPP}/SteeringWorker.cpp
+        ${CPP}/MediaDirectory.hpp ${CPP}/MediaDirectory.cpp
     RESOURCES
         ${QML}/images/HU_logo.gif
         ${QML}/images/cameraView.gif
@@ -78,8 +86,13 @@ set_target_properties(apphead_unit PROPERTIES
 # target_compile_options(apphead_unit PUBLIC -fPIC)
 # target_link_options(apphead_unit BEFORE PUBLIC -L../${C} -Wl,-rpath=../${C})
 
-target_link_libraries(apphead_unit
-    PRIVATE Qt6::Quick Qt6::Qml Qt6::Multimedia
+target_link_libraries(apphead_unit PRIVATE
+    Qt6::Quick
+    Qt6::Qml
+    Qt6::Multimedia
+    Qt6::Core
+    Qt6::QuickControls2
+    Qt6::SpatialAudio
     # aptc apsc
 )
 
