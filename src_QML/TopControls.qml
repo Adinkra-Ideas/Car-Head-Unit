@@ -25,11 +25,11 @@ Rectangle {
             id: playing
             Layout.fillWidth: true;
             Layout.fillHeight: true;
-            visible: Car.audio !== MediaPlayer.StoppedState
+            visible: Car.mp_audio !== MediaPlayer.StoppedState
             Connections {
                 target: Media
                 function onPlayingChanged() {
-                    if (Car.audio === MediaPlayer.PlayingState) {
+                    if (Car.mp_audio === MediaPlayer.PlayingState) {
                         topControls.playSignal()
                     }
                 }

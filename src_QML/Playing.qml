@@ -26,7 +26,7 @@ Item {
                 anchors.centerIn: parent
                 source: "images/musicIco/musicSpin.gif"
                 fillMode: AnimatedImage.PreserveAspectFit
-                paused: Car.audio !== MediaPlayer.PlayingState
+                paused: Car.mp_audio !== MediaPlayer.PlayingState
             }
         }
 

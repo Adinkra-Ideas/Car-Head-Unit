@@ -5,11 +5,13 @@
 
 #include "Gear.hpp"
 #include "Steering.hpp"
+#include "Media.hpp"
 #include "MediaDirectory.hpp"
 
 class Car :
             public Gear,
             public Steering,
+            public Media,
             public MediaDirectory
 {
 public:

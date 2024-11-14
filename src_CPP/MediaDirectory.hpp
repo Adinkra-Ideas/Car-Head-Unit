@@ -1,6 +1,9 @@
 #ifndef MEDIADIRECTORY_HPP
 #define MEDIADIRECTORY_HPP
 
+#include <QUrl>
+#include <QDir>
+
 #include "Props.hpp"
 
 class MediaDirectory : virtual public Props

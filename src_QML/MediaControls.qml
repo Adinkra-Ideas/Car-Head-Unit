@@ -44,7 +44,7 @@ Rectangle {
             Layout.fillWidth: true;
             Layout.fillHeight: true;
             Image {
-                source: (Car.audio === MediaPlayer.PlayingState) ? "images/musicIco/pause.png" : "images/musicIco/play.png"
+                source: (Car.mp_audio === MediaPlayer.PlayingState) ? "images/musicIco/pause.png" : "images/musicIco/play.png"
                 width: 40
                 height: 40
                 anchors.centerIn: parent
@@ -53,7 +53,7 @@ Rectangle {
                     id: playPause
                     anchors.fill: parent
                     onPressed: {
-                        Car.audio = (Car.audio === MediaPlayer.PlayingState) ? MediaPlayer.PausedState : MediaPlayer.PlayingState
+                        Car.mp_audio = (Car.mp_audio === MediaPlayer.PlayingState) ? MediaPlayer.PausedState : MediaPlayer.PlayingState
                     }
                 }
             }

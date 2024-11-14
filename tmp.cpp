@@ -2,7 +2,56 @@
 
 #include <QDebug>
 
+#ifdef Q_OS_ANDROID
+bool checkPermission() {
+    QList<bool> permissions;
 
+    auto r = QtAndroidPrivate::checkPermission("android.permission.READ_EXTERNAL_STORAGE").result();
+    if (r != QtAndroidPrivate::Authorized)
+    {
+        r = QtAndroidPrivate::requestPermission("android.permission.READ_EXTERNAL_STORAGE").result();
+        if (r == QtAndroidPrivate::Denied)
+            permissions.append(false);
+    }
+    // r = QtAndroidPrivate::checkPermission("android.permission.WRITE_EXTERNAL_STORAGE").result();
+    // qDebug() << "r2" << r;
+    // if (r != QtAndroidPrivate::Authorized)
+    // {
+    //     r = QtAndroidPrivate::requestPermission("android.permission.WRITE_EXTERNAL_STORAGE").result();
+    //     qDebug() << "r20" << r;
+    //     if (r == QtAndroidPrivate::Denied)
+    //         permissions.append(false);
+    // }
+    // r = QtAndroidPrivate::checkPermission("android.permission.MANAGE_EXTERNAL_STORAGE").result();
+    // qDebug() << "r3" << r;
+    // if (r != QtAndroidPrivate::Authorized)
+    // {
+    //     r = QtAndroidPrivate::requestPermission("android.permission.MANAGE_EXTERNAL_STORAGE").result();
+    //     qDebug() << "r30" << r;
+    //     if (r == QtAndroidPrivate::Denied)
+    //         permissions.append(false);
+    // }
+    // r = QtAndroidPrivate::checkPermission("android.permission.READ_MEDIA_IMAGES").result();
+    // qDebug() << "r4" << r;
+    // if (r != QtAndroidPrivate::Authorized)
+    // {
+    //     r = QtAndroidPrivate::requestPermission("android.permission.READ_MEDIA_IMAGES").result();
+    //     qDebug() << "r40" << r;
+    //     if (r == QtAndroidPrivate::Denied)
+    //         permissions.append(false);
+    // }
+    // r = QtAndroidPrivate::checkPermission("android.permission.WRITE_MEDIA_IMAGES").result();
+    // qDebug() << "r5" << r;
+    // if (r != QtAndroidPrivate::Authorized)
+    // {
+    //     r = QtAndroidPrivate::requestPermission("android.permission.WRITE_MEDIA_IMAGES").result();
+    //     qDebug() << "r50" << r;
+    //     if (r == QtAndroidPrivate::Denied)
+    //         permissions.append(false);
+    // }
+    return (permissions.count() != 5);
+}
+#endif
 
 
 Directory::Directory(QObject *parent) :
@@ -23,28 +72,6 @@ void    Directory::addDir(QUrl path) {
         path.setScheme(QString());
         path = QUrl::fromLocalFile(path.toString());
     }
-
-
-#ifdef Q_OS_ANDROID
-    // decode twice from %253A to %3A then to :
-    path.setUrl(QUrl::fromPercentEncoding(path.toString().toLatin1()));
-    path.setUrl(QUrl::fromPercentEncoding(path.toString().toLatin1()));
-
-    qsizetype pos = QString(path.toString()).indexOf("/tree/"); // /tree/primary:
-    qsizetype subPathPos = QString(path.toString()).indexOf(":", pos);
-    QString subPath;
-    if (subPathPos != -1) {
-        subPath = QString(path.toString()).sliced(subPathPos + 1);
-        if (subPath.size() > 0 && subPath.at(0) != '/')
-            subPath.prepend("/");
-    }
-
-    if (QString(path.toString()).sliced(pos + 6).startsWith("primary")) // inbuilt memory contains */tree/primary*
-        path.setUrl(subPath.prepend("/storage/emulated/0"));
-    else
-        path.setUrl(QString(path.toString()).sliced(pos + 6, subPathPos - (pos + 6)).prepend("/storage/").append(subPath)); // 6 == len("/tree/"), 9 == len("xxxx-xxxx")
-    path = QUrl::fromLocalFile(path.toString());
-#endif
 
     currDir_ = path.toString() + '/';
     doAddDir();

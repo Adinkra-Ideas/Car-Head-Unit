@@ -5,25 +5,9 @@ Props::Props(QObject *parent) :
             QObject{parent},
             gear_{0},
             mp_repeat_{0}
-{
-    // Initialize the mediaplayer
-    mp_player_ = new QMediaPlayer;
-    mp_audioOutput_ = new QAudioOutput;
-    mp_player_->setAudioOutput(mp_audioOutput_);
-    mp_audioOutput_->setVolume(50);
-
-    // Connect the mediaplayer's signals to the methods to manage what happens
-    connect(mp_player_, &QMediaPlayer::playbackStateChanged, this, &Props::mp_playHasChanged);
-    connect(mp_player_, &QMediaPlayer::metaDataChanged, this, &Props::mp_refreshMetadata);
-
-    // set iterator accordingly
-    mp_audIt_ = mp_audioPaths_.begin();
-
-}
+{}
 
 Props::~Props() {
-    delete mp_player_;
-    delete mp_audioOutput_;
 }
 
 void Props::mp_playHasChanged(QMediaPlayer::PlaybackState newState) {
@@ -94,3 +78,9 @@ void Props::mp_refreshMetadata() {
     //     title_ = activeFilename_;
     // emit mmetaDataChanged();
 }
+
+QStringList Props::mp_getAudioPaths() {
+    return mp_audioPaths_;
+    // sig needs to be emitted from
+}
+

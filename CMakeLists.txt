@@ -43,6 +43,7 @@ qt_add_qml_module(apphead_unit
         ${CPP}/Steering.hpp ${CPP}/Steering.cpp
         ${CPP}/SteeringWorker.hpp ${CPP}/SteeringWorker.cpp
         ${CPP}/MediaDirectory.hpp ${CPP}/MediaDirectory.cpp
+        ${CPP}/Media.hpp ${CPP}/Media.cpp
     RESOURCES
         ${QML}/images/HU_logo.gif
         ${QML}/images/cameraView.gif

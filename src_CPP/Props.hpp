@@ -20,17 +20,13 @@ class Props : public QObject
     Q_PROPERTY(quint16 speed READ getSpeed WRITE setSpeed NOTIFY speedChanged)
     Q_PROPERTY(quint8 steering READ getSteering WRITE setSteering NOTIFY steeringChanged)
     /*** ***/
-    // Q_PROPERTY(QMediaPlayer::PlaybackState audio READ getAudio WRITE setAudio NOTIFY playingChanged) // rename to getCurrAudio
-    Q_PROPERTY(QString mp_currDir /*READ getDir*/ WRITE mp_addDir /*NOTIFY dirChanged*/)
+    Q_PROPERTY(QMediaPlayer::PlaybackState mp_audio READ mp_getAudio WRITE mp_setAudio NOTIFY playingChanged) // rename to getCurrAudio
+    Q_PROPERTY(QString mp_currDir WRITE mp_addDir)
+    Q_PROPERTY(QStringList mp_audiopaths READ mp_getAudioPaths NOTIFY audioPathsChanged)
+    Q_PROPERTY(QString mp_activeMedia WRITE mp_chooseActiveMedia)
     // Q_PROPERTY(bool change WRITE changePlay NOTIFY playingChanged) // prevOrNext
     // Q_PROPERTY(QString title READ getTitle NOTIFY mmetaDataChanged)
     // Q_PROPERTY(QString author READ getAuthor NOTIFY mmetaDataChanged)
-    // Q_PROPERTY(QStringList audiopaths READ getAudioPaths NOTIFY audioPathsChanged)
-    // Q_PROPERTY(QString activeMedia WRITE chooseActiveMedia NOTIFY playingChanged)
-    // Q_PROPERTY(bool intervalStatus READ getIntervalStatus WRITE setIntervalStatus NOTIFY intervalStatusChanged)
-    // Q_PROPERTY(qint16 lapCount WRITE setLapCount)
-    // Q_PROPERTY(qint16 lapDuration WRITE setLapDuration)
-    // Q_PROPERTY(qint16 restDuration WRITE setRestDuration)
     // Q_PROPERTY(quint8 repeat READ getRepeat WRITE setRepeat NOTIFY repeatChanged)
 
 public:
@@ -54,23 +50,20 @@ public:
 
     virtual void    mp_addDir(QUrl path) = 0;
 
-    // void chooseActiveMedia(QString path);
+    virtual void mp_chooseActiveMedia(QString path) = 0;
+    virtual void mp_setAudio(QMediaPlayer::PlaybackState newState) = 0;
+    virtual QMediaPlayer::PlaybackState mp_getAudio() const = 0;
     // void appStateChanged(Qt::ApplicationState state);
-    // virtual void setAudio(QMediaPlayer::PlaybackState newState) = 0;
-    // virtual QMediaPlayer::PlaybackState getAudio() const = 0;
+
+
 
     // virtual QString getDir() const = 0;
     // virtual void    changePlay(bool move) = 0;
     // QString getTitle();
     // QString getAuthor();
-    // QStringList getAudioPaths();
+    QStringList mp_getAudioPaths();
     // void    setRepeat(quint8 val);
     // quint8  getRepeat();
-    // virtual void setIntervalStatus(bool flag) = 0;
-    // virtual bool getIntervalStatus() = 0;
-    // virtual void setLapCount(qint16 newValue) = 0;
-    // virtual void setLapDuration(qint16 newValue) = 0;
-    // virtual void setRestDuration(qint16 newValue) = 0;
     /////////////////////////////////////////////////////
 
 signals:
@@ -81,12 +74,11 @@ signals:
     void    operateSteering();
     void    steeringChanged();
 
-    // void playingChanged();
+    void playingChanged();  //  continue from all the methods that emits this
     // void dirChanged();
     // void mmetaDataChanged();
-    // void audioPathsChanged();
+    void audioPathsChanged();
     // void thePrintout();
-    // void intervalStatusChanged();
     // void repeatChanged();
     // void startrThread();
 
