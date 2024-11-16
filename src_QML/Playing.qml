@@ -45,6 +45,7 @@ Item {
                 anchors.topMargin: 5
                 SequentialAnimation {
                     id: songTitleAnim
+                    loops: Animation.Infinite
                     running: (songTitle.width > child2.width)
                     NumberAnimation { target: songTitle; property: "x"; to: -songTitle.width; duration: (songTitle.width / 40) * 1000 }
                     NumberAnimation { target: songTitle; property: "x"; to: 0; duration: 5000 }

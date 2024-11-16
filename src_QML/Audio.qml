@@ -13,6 +13,7 @@ Item {
             rightMargin: 10
             bottomMargin: 90    // MediaControls height == 55
         }
+        clip: true
 
         property int delegateHeight: 40
 
@@ -21,7 +22,7 @@ Item {
             width: parent.width
             height: theListView.delegateHeight
             Text {
-                text: modelData //.slice(modelData.lastIndexOf('/') + 1)
+                text: modelData.slice(modelData.lastIndexOf('/') + 1)
                 color: index % 2 ? "grey" : "yellow"
                 font.pointSize: 12
             }

@@ -77,8 +77,6 @@ Window {
                 }
             }
             function mouseEventHandler(mouse) {
-                // if (!dinkPlayer.visible)
-                //     dinkPlayer.visible = true
                 hideMediaTimer.restart()
                 hideMediaTimer.start()
                 mouse.accepted = false
@@ -108,7 +106,14 @@ Window {
         anchors.right: parent.right;
         anchors.rightMargin: 15;
 
-        Image { source: "images/home.png"; width: 30; height: 30 }
+        Image { source: "images/home.png"; width: 30; height: 30
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    dinkPlayer.visible = false
+                }
+            }
+        }
         Image { source: "images/music.png"; width: 30; height: 30
             MouseArea {
                 anchors.fill: parent
