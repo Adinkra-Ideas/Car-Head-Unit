@@ -19,15 +19,16 @@ class Props : public QObject
     Q_PROPERTY(quint8 gear READ getGear WRITE setGear NOTIFY gearChanged)
     Q_PROPERTY(quint16 speed READ getSpeed WRITE setSpeed NOTIFY speedChanged)
     Q_PROPERTY(quint8 steering READ getSteering WRITE setSteering NOTIFY steeringChanged)
-    /*** ***/
-    Q_PROPERTY(QMediaPlayer::PlaybackState mp_audio READ mp_getAudio WRITE mp_setAudio NOTIFY playingChanged) // rename to getCurrAudio
-    Q_PROPERTY(QString mp_currDir WRITE mp_addDir)
-    Q_PROPERTY(QStringList mp_audiopaths READ mp_getAudioPaths NOTIFY audioPathsChanged)
+
+    /****************** For the Media Parts ***************************/
+    Q_PROPERTY(QMediaPlayer::PlaybackState mp_audio READ mp_getAudio WRITE mp_setAudio NOTIFY mp_playingChanged) // rename to getCurrAudio
+    Q_PROPERTY(QStringList mp_audiopaths READ mp_getAudioPaths WRITE mp_setAudioPaths NOTIFY mp_audioPathsChanged)
     Q_PROPERTY(QString mp_activeMedia WRITE mp_chooseActiveMedia)
-    // Q_PROPERTY(bool change WRITE changePlay NOTIFY playingChanged) // prevOrNext
-    // Q_PROPERTY(QString title READ getTitle NOTIFY mmetaDataChanged)
-    // Q_PROPERTY(QString author READ getAuthor NOTIFY mmetaDataChanged)
-    // Q_PROPERTY(quint8 repeat READ getRepeat WRITE setRepeat NOTIFY repeatChanged)
+    Q_PROPERTY(bool mp_change WRITE mp_changePlay NOTIFY mp_playingChanged) // prevOrNext
+    Q_PROPERTY(quint8 mp_repeat READ mp_getRepeat WRITE mp_setRepeat NOTIFY mp_repeatChanged)
+    Q_PROPERTY(QString mp_title READ mp_getTitle NOTIFY mp_mmetaDataChanged)
+    Q_PROPERTY(QString mp_author READ mp_getAuthor NOTIFY mp_mmetaDataChanged)
+
 
 public:
     explicit    Props(QObject *parent = nullptr);
@@ -48,39 +49,34 @@ public:
     void mp_playHasChanged(QMediaPlayer::PlaybackState newState);
     void mp_refreshMetadata();
 
-    virtual void    mp_addDir(QUrl path) = 0;
-
+    /****************** For the Media Parts ***************************/
+    // implemented in MediaDirectory.cpp
+    virtual QStringList mp_getAudioPaths() = 0;
+    virtual void    mp_setAudioPaths(QStringList path) = 0;
+    // implemented in Media.cpp
     virtual void mp_chooseActiveMedia(QString path) = 0;
     virtual void mp_setAudio(QMediaPlayer::PlaybackState newState) = 0;
     virtual QMediaPlayer::PlaybackState mp_getAudio() const = 0;
-    // void appStateChanged(Qt::ApplicationState state);
+    virtual void mp_changePlay(bool move) = 0;
+    virtual void    mp_setRepeat(quint8 val) = 0;
+    virtual quint8  mp_getRepeat() = 0;
+    virtual QString mp_getTitle() = 0;
+    virtual QString mp_getAuthor() = 0;
 
-
-
-    // virtual QString getDir() const = 0;
-    // virtual void    changePlay(bool move) = 0;
-    // QString getTitle();
-    // QString getAuthor();
-    QStringList mp_getAudioPaths();
-    // void    setRepeat(quint8 val);
-    // quint8  getRepeat();
     /////////////////////////////////////////////////////
 
 signals:
     void    operateGear();
     void    gearChanged();
     void    speedChanged();
-
     void    operateSteering();
     void    steeringChanged();
 
-    void playingChanged();  //  continue from all the methods that emits this
-    // void dirChanged();
-    // void mmetaDataChanged();
-    void audioPathsChanged();
-    // void thePrintout();
-    // void repeatChanged();
-    // void startrThread();
+    /****************** For the Media Parts ***************************/
+    void    mp_audioPathsChanged();
+    void    mp_playingChanged();
+    void    mp_repeatChanged();
+    void    mp_mmetaDataChanged();
 
 private:
     // Prevent all the constructors and operators below
@@ -93,18 +89,16 @@ private:
 protected:
     quint8      gear_;  // active gear
 
-    QMediaPlayer     * mp_player_;
+    /****************** For the Media Parts ***************************/
+    QMediaPlayer          * mp_player_;
     QAudioOutput     * mp_audioOutput_;
-    QStringList         mp_audioPaths_;    // holds all the mp3 files found in directory selected by the user for media search
-    QStringList::iterator    mp_audIt_;  // iterator to audioPaths_
-    // QStringList           videoPaths_;
-    // QStringList::iterator       vpIt_; // iterator to videoPaths_
-    QString                mp_currDir_;  // Dir selected by the user, from where media files was last added
-    // QString           activeFilename_; // filename being played. could be a video or audio
-    // QVariant                  author_; // Holds the Author metadata for active media
-    // QVariant                   title_; // Holds the Title metadata for active media
+    QStringList         mp_audioPaths_; // holds all the mp3 files found in directory selected by the user for media search
+    QStringList::iterator    mp_audIt_; // iterator to audioPaths_
+    QString                mp_currDir_; // Dir selected by the user, from where media files was last added
+    QString         mp_activeFilename_; // filename being played. could be a video or audio
+    QVariant                mp_author_; // Holds the Author metadata for active media
+    QVariant                 mp_title_; // Holds the Title metadata for active media
     quint8                  mp_repeat_; // 0 == repeat none, 1 == repeat 1, 2 == repeat all
 };
-
 
 #endif // PROPS_HPP

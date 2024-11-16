@@ -22,6 +22,20 @@ Media::~Media() {
     delete mp_audioOutput_;
 }
 
+void    Media::mp_setRepeat(quint8 val) {
+    mp_repeat_ = val;
+    emit mp_repeatChanged();
+}
+quint8  Media::mp_getRepeat() {
+    return mp_repeat_;
+}
+QString Media::mp_getTitle() {
+    return mp_title_.toString();
+}
+QString Media::mp_getAuthor() {
+    return mp_author_.toString();
+}
+
 
 /**
   * Function called to set a new Active
@@ -46,7 +60,6 @@ void Media::mp_chooseActiveMedia(QString path) {
         mp_audIt_ = mp_audioPaths_.begin() + pos;
         mp_player_->setSource(*mp_audIt_);
     }
-    qDebug() << "fffffffffffffffffffffffffffff" << path;
 }
 
 /**
@@ -81,3 +94,41 @@ QMediaPlayer::PlaybackState Media::mp_getAudio() const {
     return mp_player_->playbackState();
 }
 
+
+/**
+  * Moves to next or previous sound on the audio list.
+  * @param move, if true, sound forwards to next,
+  * if false, will be previous
+  * @returns void
+  */
+void Media::mp_changePlay(bool move) {
+    // didnt use audIt_ != audItRealBegin_ coz
+    // Qlist begin() is never the same
+
+    // if last, stop
+    // if not last, next
+    if (move && mp_audioPaths_.size()) { // fwd
+        if (*mp_audIt_ == mp_audioPaths_.last()
+            && mp_repeat_ == 2) {
+            mp_audIt_ = mp_audioPaths_.begin();
+        } else if (*mp_audIt_ != mp_audioPaths_.last()) {
+            ++mp_audIt_;
+        }
+        mp_chooseActiveMedia(*mp_audIt_);
+        mp_setAudio(QMediaPlayer::PlayingState);
+    } else if (!move && mp_audioPaths_.size()) { // bkwd
+        if (*mp_audIt_ != mp_audioPaths_.first()) {
+            qsizetype pos = mp_audioPaths_.indexOf(*mp_audIt_);
+            if (pos != -1 && pos != 0) {
+                // I know its because I did not properly plan my DRY right from the onset
+                mp_audIt_ = mp_audioPaths_.begin();
+                mp_chooseActiveMedia(*mp_audIt_);
+                mp_setAudio(QMediaPlayer::PlayingState);
+
+                mp_audIt_ = mp_audioPaths_.begin() + (pos - 1);
+            }
+        }
+        mp_chooseActiveMedia(*mp_audIt_);
+        mp_setAudio(QMediaPlayer::PlayingState);
+    }
+}

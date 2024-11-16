@@ -57,7 +57,7 @@ Window {
         anchors.right: parent.right
         anchors.rightMargin: 10
         anchors.verticalCenter: parent.verticalCenter
-        visible: true
+        visible: false
         Behavior on width { NumberAnimation { duration: 200 } }
         MouseArea {
             id: activityListener

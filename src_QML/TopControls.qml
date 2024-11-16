@@ -27,8 +27,8 @@ Rectangle {
             Layout.fillHeight: true;
             visible: Car.mp_audio !== MediaPlayer.StoppedState
             Connections {
-                target: Media
-                function onPlayingChanged() {
+                target: Car
+                function onMp_playingChanged() {
                     if (Car.mp_audio === MediaPlayer.PlayingState) {
                         topControls.playSignal()
                     }
@@ -132,7 +132,7 @@ Rectangle {
 
         onAccepted: {
             folderDialog.currentFolder = folderDialog.selectedFolder
-            Car.mp_currDir = folderDialog.selectedFolder
+            Car.mp_audiopaths = folderDialog.selectedFolder
         }
     }
 }

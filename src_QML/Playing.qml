@@ -39,7 +39,7 @@ Item {
                 id: songTitle
                 x: 0
                 color: "#FFFFFF"
-                text: Car.title // "All I have to do is dream"
+                text: Car.mp_title // "All I have to do is dream"
                 font.pointSize: (parent.width / 14.2857142857) > 0 ? parent.width / 14.285714285 : 14 // should be 14 at 200 which is estimated smallest possible display of this grid item
                 anchors.top: child2.top;
                 anchors.topMargin: 5
@@ -62,7 +62,7 @@ Item {
                 id: artistName
                 x: 0
                 color: "#1777B7";
-                text: Car.author
+                text: Car.mp_author
                 font.pointSize: (parent.width / 20) > 0 ? parent.width / 20 : 10 // should be 10 at 200 which is estimated smallest possible display of this grid item
                 anchors.top: songTitle.bottom;
                 anchors.topMargin: 5

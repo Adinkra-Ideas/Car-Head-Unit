@@ -35,7 +35,7 @@ Rectangle {
                     id: prevPlay
                     anchors.fill: parent
                     onPressed: {
-                        Car.change = false
+                        Car.mp_change = false
                     }
                 }
             }
@@ -72,7 +72,7 @@ Rectangle {
                     id: nextPlay
                     anchors.fill: parent
                     onPressed: {
-                        Car.change = true
+                        Car.mp_change = true
                     }
                 }
             }
@@ -82,7 +82,7 @@ Rectangle {
             Layout.fillWidth: true;
             Layout.fillHeight: true;
             Image {
-                source: Car.repeat == 0 ? "images/musicIco/loop.png" : Car.repeat == 1 ? "images/musicIco/loop1.png" : Car.repeat == 2 ? "images/musicIco/loop2.png" : ""
+                source: Car.mp_repeat == 0 ? "images/musicIco/loop.png" : Car.mp_repeat == 1 ? "images/musicIco/loop1.png" : Car.mp_repeat == 2 ? "images/musicIco/loop2.png" : ""
                 width: 30
                 height: 30
                 anchors.centerIn: parent
@@ -91,10 +91,10 @@ Rectangle {
                     id: changeRepeatMode
                     anchors.fill: parent
                     onPressed: {
-                        if (Car.repeat < 2) {
-                            Car.repeat += 1
+                        if (Car.mp_repeat < 2) {
+                            Car.mp_repeat += 1
                         } else {
-                            Car.repeat = 0
+                            Car.mp_repeat = 0
                         }
                     }
                 }

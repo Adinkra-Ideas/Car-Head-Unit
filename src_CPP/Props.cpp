@@ -11,39 +11,35 @@ Props::~Props() {
 }
 
 void Props::mp_playHasChanged(QMediaPlayer::PlaybackState newState) {
-    // changePlay(true);
-    // return ;
-    // // This part prevents the qml dependencies that
-    // // hides onQMediaPlayer::StoppedState to not hide
-    // // after one song ends, before the next song start.
-    // // firing out the emit, when audioPaths_
-    // // didnt reach end track but only current
-    // // track ended, will cause the QML to be
-    // // erratic in the parts that uses
-    // // player_->stop() to hide their parts
-    // // ALSO: we will add a check to check repeat
-    // // and act to either play again, play next, or do nothing
-    // if (audioPaths_.size()
-    //     && newState == QMediaPlayer::StoppedState) {
-    //     if (repeat_ == 1
-    //         && audioPaths_.contains(*audIt_)) {   // wrong! we're dereferencing *audit without first checking if the vector is empty
-    //         player_->setPosition(0);
-    //         setAudio(QMediaPlayer::PlayingState);
-    //     } else if (repeat_ == 2) { // if repeat all
-    //         changePlay(true);
-    //     } else {
-    //         // Dont let Qml dependencies hide their
-    //         // stuffs onStop and then show it again
-    //         // when next track begins, leading to
-    //         // a GUI blink
-    //         setAudio(QMediaPlayer::StoppedState);
-    //         setAudio(QMediaPlayer::PausedState);
-    //     }
-    // }
+    // This part prevents the qml dependencies that
+    // hides onQMediaPlayer::StoppedState to not hide
+    // after one song ends, before the next song start.
+    // firing out the emit, when audioPaths_
+    // didnt reach end track but only current
+    // track ended, will cause the QML to be
+    // erratic in the parts that uses
+    // player_->stop() to hide their parts
+    // ALSO: we will add a check to check repeat
+    // and act to either play again, play next, or do nothing
+    if (mp_audioPaths_.size()
+        && newState == QMediaPlayer::StoppedState) {
+        if (mp_repeat_ == 1
+            && mp_audioPaths_.contains(*mp_audIt_)) {
+            mp_player_->setPosition(0);
+            mp_setAudio(QMediaPlayer::PlayingState);
+        } else if (mp_repeat_ == 2) {                   // if repeat all
+            mp_changePlay(true);
+        } else {
+            // Dont let Qml dependencies hide their
+            // stuffs onStop and then show it again
+            // when next track begins, leading to
+            // a GUI blink
+            mp_setAudio(QMediaPlayer::StoppedState);
+            mp_setAudio(QMediaPlayer::PausedState);
+        }
+    }
 
-    // emit playingChanged();
-    // // refresh the qml view displaying audioPaths_ as list
-    // emit audioPathsChanged();
+    emit mp_playingChanged();
 }
 
 // this gets called after clicking play,
@@ -52,35 +48,22 @@ void Props::mp_refreshMetadata() {
     // // get filename if audio
     // // same will be done for video part using same activeFilename_
     // // so that the name can be gotten whether video or audio
-    // qsizetype pos = (*audIt_).lastIndexOf("/", -1);
-    // activeFilename_ = (*audIt_).sliced(pos + 1);
+    qsizetype pos = (*mp_audIt_).lastIndexOf("/", -1); // CONTINUE FROM HERE. WE NEED TO FIX PLAYING PAGE
+    mp_activeFilename_ = (*mp_audIt_).sliced(pos + 1);
 
-    // QMediaMetaData tmp = player_->metaData();
+    QMediaMetaData tmp = mp_player_->metaData();
 
-    // author_ = tmp.value(QMediaMetaData::Author);
-    // if (author_.isNull())
-    //     author_ = tmp.value(QMediaMetaData::Comment);
-    // if (author_.isNull())
-    //     author_ = tmp.value(QMediaMetaData::Description);
-    // if (author_.isNull())
-    //     author_ = tmp.value(QMediaMetaData::Publisher);
-    // if (author_.isNull())
-    //     author_ = tmp.value(QMediaMetaData::Copyright);
-    // if (author_.isNull())
-    //     author_ = tmp.value(QMediaMetaData::Url);
-    // if (author_.isNull())
-    //     author_ = tmp.value(QMediaMetaData::AlbumArtist);
-    // if (author_.isNull())
-    //     author_ = QVariant(tr("Unknown"));
+    mp_author_ = tmp.value(QMediaMetaData::Author);
+    if (mp_author_.isNull()) mp_author_ = tmp.value(QMediaMetaData::Comment);
+    if (mp_author_.isNull()) mp_author_ = tmp.value(QMediaMetaData::Description);
+    if (mp_author_.isNull()) mp_author_ = tmp.value(QMediaMetaData::Publisher);
+    if (mp_author_.isNull()) mp_author_ = tmp.value(QMediaMetaData::Copyright);
+    if (mp_author_.isNull()) mp_author_ = tmp.value(QMediaMetaData::Url);
+    if (mp_author_.isNull()) mp_author_ = tmp.value(QMediaMetaData::AlbumArtist);
+    if (mp_author_.isNull()) mp_author_ = QVariant(tr("Unknown"));
 
-    // title_ = tmp.value(QMediaMetaData::Title);
-    // if (title_.isNull())
-    //     title_ = activeFilename_;
-    // emit mmetaDataChanged();
+    mp_title_ = tmp.value(QMediaMetaData::Title);
+    if (mp_title_.isNull()) mp_title_ = mp_activeFilename_;
+
+    emit mp_mmetaDataChanged();
 }
-
-QStringList Props::mp_getAudioPaths() {
-    return mp_audioPaths_;
-    // sig needs to be emitted from
-}
-

@@ -82,8 +82,8 @@ Rectangle {
     MediaControls {
         id: mediaControls
         color: parent.color
-        visible:  true// Car.mp_audio !== MediaPlayer.StoppedState
-        property bool showMediaControls: true //!activityListener.inactiveMouse
+        visible:  Car.mp_audio !== MediaPlayer.StoppedState
+        property bool showMediaControls: !activityListener.inactiveMouse // true
         opacity: 1//showMediaControls
         Behavior on opacity { NumberAnimation { duration: 500 } }
         anchors.bottom: parent.bottom

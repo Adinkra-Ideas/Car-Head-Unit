@@ -7,7 +7,13 @@ MediaDirectory::MediaDirectory(QObject *parent) :
 
 MediaDirectory::~MediaDirectory() {}
 
-void    MediaDirectory::mp_addDir(QUrl path) {
+void    MediaDirectory::mp_setAudioPaths(QStringList pathe) {
+    // This is a workaround.
+    // normally the param set by this methoud ought to directly
+    // be QUrl because FileDialog in qml passes a QUrl to cpp.
+    // But using QUrl here as param will not work with Q_PROPERTY
+    QUrl path = pathe.join("");
+
     // change path to a usable path in times
     // when FileDialog sends random file scheme.
     if (! path.isLocalFile()) {
@@ -35,8 +41,13 @@ void    MediaDirectory::mp_addDir(QUrl path) {
     }
 
     // refresh the directory lists under Audio page
-    emit audioPathsChanged();
+    emit mp_audioPathsChanged();
 }
+
+QStringList MediaDirectory::mp_getAudioPaths() {
+    return mp_audioPaths_;
+}
+
 
 
 

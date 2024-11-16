@@ -12,7 +12,8 @@ public:
     explicit MediaDirectory(QObject *parent = nullptr);
     virtual ~MediaDirectory();
 
-    void    mp_addDir(QUrl path) override;
+    QStringList mp_getAudioPaths() override;
+    void        mp_setAudioPaths(QStringList path) override;
 
 private:
     void    doAddDir();
