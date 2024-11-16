@@ -412,6 +412,7 @@ Window {
     }
 
 
+    // Ambient Lighting paint
     Rectangle {
         id: ambientGreenLighting
         width: Screen.width
@@ -422,16 +423,6 @@ Window {
         color: "#5865F2"
         opacity: 0
     }
-    // Rectangle {
-    //     id: ambientBlueLighting
-    //     width: Screen.width
-    //     height: Screen.height
-    //     x: 0
-    //     y: 0
-    //     z: 5
-    //     color: "blue"
-    //     opacity: 0.5
-    // }
 
 }
 
