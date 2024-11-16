@@ -128,6 +128,14 @@ Window {
             onMoved: {
                 ambientGreenLighting.opacity = value
             }
+            handle: Rectangle {
+                x: ambientLightingControlSlider.leftPadding + ambientLightingControlSlider.visualPosition * (ambientLightingControlSlider.availableWidth - width)
+                y: ambientLightingControlSlider.topPadding + (ambientLightingControlSlider.availableHeight - height) / 2
+                implicitWidth: 15
+                implicitHeight: 15
+                radius: width/2
+                color: ambientLightingControlSlider.pressed ? "#1777B7" : "#1777B7"
+            }
         }
     }
 
