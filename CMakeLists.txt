@@ -48,7 +48,7 @@ qt_add_qml_module(apphead_unit
         ${QML}/images/HU_logo.gif
         ${QML}/images/cameraView.gif
         ${QML}/images/selected_gear.gif
-        ${QML}/images/home.png
+        ${QML}/images/monitor.png
         ${QML}/images/music.png
         ${QML}/images/boardBg2.png
         ${QML}/images/musicIco/musicSpin.gif

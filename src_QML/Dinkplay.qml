@@ -92,34 +92,34 @@ Rectangle {
         height: 55
     }
 
-    MouseArea {
-        id: activityListener
-        anchors.fill: parent
-        z: 2
-        propagateComposedEvents: true
-        hoverEnabled: true
+    // MouseArea {
+    //     id: activityListener
+    //     anchors.fill: parent
+    //     z: 2
+    //     propagateComposedEvents: true
+    //     hoverEnabled: true
 
-        onPressed: mouse => mouseEventHandlerInDinkplay(mouse)
-        // onPositionChanged: mouse => mouseEventHandlerInDinkplay(mouse)
-        onWheel: mouse => mouseEventHandlerInDinkplay(mouse)
-        onDoubleClicked: mouse => mouse.accepted = false // setting mouse.accepted to false prevents the cursor from grabbing
+    //     onPressed: mouse => mouseEventHandlerInDinkplay(mouse)
+    //     // onPositionChanged: mouse => mouseEventHandlerInDinkplay(mouse)
+    //     onWheel: mouse => mouseEventHandlerInDinkplay(mouse)
+    //     onDoubleClicked: mouse => mouse.accepted = false // setting mouse.accepted to false prevents the cursor from grabbing
 
-        Timer {
-            id: hideTopAndMediaControls
-            interval: 3000
-            running: true
-            repeat: true
-            onTriggered: {
-                mediaControls.opacity = 0
-                topControls.opacity = 0
-            }
-        }
-        function mouseEventHandlerInDinkplay(mouse) {
-            mediaControls.opacity = 1
-            topControls.opacity = 1
-            hideTopAndMediaControls.restart()
-            hideTopAndMediaControls.start()
-            mouse.accepted = false
-        }
-    }
+    //     Timer {
+    //         id: hideTopAndMediaControls
+    //         interval: 3000
+    //         running: true
+    //         repeat: true
+    //         onTriggered: {
+    //             mediaControls.opacity = 0
+    //             topControls.opacity = 0
+    //         }
+    //     }
+    //     function mouseEventHandlerInDinkplay(mouse) {
+    //         mediaControls.opacity = 1
+    //         topControls.opacity = 1
+    //         hideTopAndMediaControls.restart()
+    //         hideTopAndMediaControls.start()
+    //         mouse.accepted = false
+    //     }
+    // }
 }

@@ -47,7 +47,7 @@ Window {
         anchors.fill: changingBg
     }
 
-    // musicplayer
+    // musicplayer app
     Dinkplay {
         id: dinkPlayer
         width: root.width * 0.293 // 300
@@ -58,6 +58,7 @@ Window {
         anchors.rightMargin: 10
         anchors.verticalCenter: parent.verticalCenter
         visible: false
+        // purpleOpacity: 0.5
         Behavior on width { NumberAnimation { duration: 200 } }
         MouseArea {
             id: activityListener
@@ -68,17 +69,18 @@ Window {
             property bool inactiveMouse: false
             // hide if inactive for 10 seconds
             Timer {
-                id: hideMediaTimer
+                id: hideOpenedApps
                 interval: 10000
                 running: true
                 repeat: true
                 onTriggered: {
                     dinkPlayer.visible = false
+                    ambientLightingControl.visible = false
                 }
             }
             function mouseEventHandler(mouse) {
-                hideMediaTimer.restart()
-                hideMediaTimer.start()
+                hideOpenedApps.restart()
+                hideOpenedApps.start()
                 mouse.accepted = false
             }
             onPressed: mouse => mouseEventHandler(mouse)
@@ -98,19 +100,56 @@ Window {
         visible: dinkPlayer.visible
     }
 
+    // ambient lighting app
+    Item {
+        id: ambientLightingControl
+        anchors {
+           top: topNavbar.bottom
+           left: topNavbar.left
+           right: topNavbar.right
+           topMargin: 10
+        }
+        z: 5
+        visible: false
+        Behavior on visible { NumberAnimation { duration: 200 } }
+
+        Slider {
+            id: ambientLightingControlSlider
+            implicitWidth: parent.width;
+            implicitHeight: 20
+            anchors {
+                top: ambientLightingControl.top
+                left: ambientLightingControl.left
+            }
+            from: 0
+            value: ambientGreenLighting.opacity
+            to: 0.5
+            stepSize: 0.01
+            onMoved: {
+                ambientGreenLighting.opacity = value
+            }
+        }
+    }
+
     // NavBar
     Row {
+        id: topNavbar
         spacing: 15;
         anchors.top: parent.top;
         anchors.topMargin: 5;
         anchors.right: parent.right;
         anchors.rightMargin: 15;
 
-        Image { source: "images/home.png"; width: 30; height: 30
+        Image { source: "images/monitor.png"; width: 30; height: 30
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    dinkPlayer.visible = false
+                    // So that the next iteration of timer wont
+                    // hide the app soon as we just opening it
+                    if (!ambientLightingControl.visible) {
+                        hideOpenedApps.restart()
+                    }
+                    ambientLightingControl.visible = !ambientLightingControl.visible
                 }
             }
         }
@@ -119,7 +158,7 @@ Window {
                 anchors.fill: parent
                 onClicked: {
                     if (!dinkPlayer.visible) {
-                        hideMediaTimer.restart()
+                        hideOpenedApps.restart()
                     }
                     dinkPlayer.visible = !dinkPlayer.visible
                 }
@@ -363,6 +402,28 @@ Window {
         color: "#1777B7"
         source: wallFrameForSteering
     }
+
+
+    Rectangle {
+        id: ambientGreenLighting
+        width: Screen.width
+        height: Screen.height
+        x: 0
+        y: 0
+        z: 5
+        color: "#5865F2"
+        opacity: 0
+    }
+    // Rectangle {
+    //     id: ambientBlueLighting
+    //     width: Screen.width
+    //     height: Screen.height
+    //     x: 0
+    //     y: 0
+    //     z: 5
+    //     color: "blue"
+    //     opacity: 0.5
+    // }
 
 }
 
