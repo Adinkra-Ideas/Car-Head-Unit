@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>BatteryIcon.qml</file>
+        <file>BatteryIcon.ttf</file>
+        <file>image/car.jpg</file>
+        <file>image/selected_gear.gif</file>
+    </qresource>
+</RCC>
