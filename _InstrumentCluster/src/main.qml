@@ -50,7 +50,7 @@ Window {
         source: "image/selected_gear.gif"
         Text {
             color: "#FF3131"
-            text: "P" // all that is left is to make this text responsive from cpp
+            text: batteryIconObj.currentGear // all that is left is to make this text responsive from cpp
             width: 50
             height: 50
             font.pointSize: 20

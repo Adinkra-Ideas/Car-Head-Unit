@@ -9,7 +9,7 @@ BatteryIcon::BatteryIcon(QObject *parent) :
 
 {
     // start the timer
-    _battTimerId = startTimer(2000);
+    _battTimerId = startTimer(500);
 
     // init half-duplex transmission between I2C Bus and INA219
     // if ( ina219_begin_txv() ) {
@@ -25,6 +25,30 @@ BatteryIcon::BatteryIcon(QObject *parent) :
     if (_fd != -1) {
         read(_fd, &_percent, 1);
     }
+
+
+
+    /////////////////////////////////////////
+    ///     // get current user home path
+    #ifdef Q_OS_WIN32
+    path_ = QString(getenv("USERPROFILE"))
+                .append("\\activeGear")
+                .toLocal8Bit()
+                .constData();
+    #elif defined(Q_OS_LINUX)
+    if ((path_ = getenv("HOME")) == NULL) {
+        path_ = getpwuid(getuid())->pw_dir;
+    }
+    #else
+    qDebug() << "UNSUPPORTED PLATFORM!";
+    #endif
+
+    // open the file for reading active gear as text.
+    fd_ = open(path_, O_RDONLY);
+    read(fd_, &gear_, 1);
+    lseek(fd_, 0, SEEK_SET);
+
+    oldGear_ = gear_;
 }
 
 BatteryIcon::~BatteryIcon() {
@@ -33,6 +57,9 @@ BatteryIcon::~BatteryIcon() {
 
     // close the fd
     close(_fd);
+
+    // close the shared file fd
+    close(fd_);
 }
 
 
@@ -41,6 +68,11 @@ BatteryIcon::~BatteryIcon() {
         // **************************************
 uint8_t BatteryIcon::isPercent() const {
     return _percent;
+}
+
+QString BatteryIcon::getGear() const {
+    qDebug() << "uuuuuuuuuuuuuuuuuu" << oldGear_;
+    return QString(&oldGear_);
 }
         // **************************************
         //          GETTER METHODS ENDS         *
@@ -67,6 +99,14 @@ void BatteryIcon::setPercent(uint8_t & percent) {
   */
 void BatteryIcon::timerEvent(QTimerEvent *event) {
     refreshPercent();
+
+    // Read from the shared file
+    read(fd_, &gear_, 1);
+    lseek(fd_, 0, SEEK_SET);
+    if (gear_ != oldGear_) {
+        oldGear_ = gear_;
+        emit gearIsChanged();
+    }
 }
 
 /**

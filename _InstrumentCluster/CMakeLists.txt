@@ -18,6 +18,7 @@ set(PROJECT_SOURCES
         src/CANBusReader.h src/CANBusReader.cpp
         src/Speedometer.h src/Speedometer.cpp
         src/BatteryIcon.hpp src/BatteryIcon.cpp
+        # src/ActiveGear.hpp src/ActiveGear.cpp
         # src/INA219.h
 )
 

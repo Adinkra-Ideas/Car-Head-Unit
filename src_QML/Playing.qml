@@ -86,7 +86,7 @@ Item {
                 id: artistImage
                 width: (parent.width < parent.height) ? parent.width / 4 : parent.height / 4
                 height: width
-                source: "images/musicIco/artist.jpg"
+                source: "images/musicIco/artist.png"
                 fillMode: AnimatedImage.PreserveAspectFit
                 visible: false // required for // rounded edge effect for image
                 anchors.horizontalCenter: parent.horizontalCenter

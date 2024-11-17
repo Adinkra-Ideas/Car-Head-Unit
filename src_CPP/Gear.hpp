@@ -4,6 +4,11 @@
 #include <QObject>
 #include <QThread>
 
+#include <fcntl.h>
+#include <unistd.h>
+
+#include <stdio.h>
+
 #include "Props.hpp"
 #include "GearWorker.hpp"
 
@@ -35,6 +40,8 @@ protected:
     quint8    _mode;  // throttle value assigned to current active gear
     bool      _init;  // false if PCA9685 not yet init-ed, true if init-ed
 
+    int           fd_;  // for storing the fd of opened path_
+    const char * path_; // file path for storing the active gear so other processes can read active gear
     GearWorker  gearWorker_;
 };
 

@@ -13,6 +13,26 @@ Gear::Gear(QObject *parent) :
     connect(this, &Props::operateGear, &gearWorker_, &GearWorker::doWork);
     theThread.start();
 
+    // get current user home path
+    #ifdef Q_OS_WIN32
+    path_ = QString(getenv("USERPROFILE"))
+                   .append("\\activeGear")
+                   .toLocal8Bit()
+                   .constData();
+    #elif defined(Q_OS_LINUX)
+    if ((path_ = getenv("HOME")) == NULL) {
+        path_ = getpwuid(getuid())->pw_dir;
+    }
+    #else
+    qDebug() << "UNSUPPORTED PLATFORM!";
+    #endif
+
+    // open the file for storing active gear as text.
+    // Create if not exist
+    fd_ = open(path_, /*O_NONBLOCK |*/ O_RDWR | O_TRUNC | O_CREAT, 0640);
+    write(fd_, "P", 1);
+    lseek(fd_, 0, SEEK_SET);
+
     // zzz
     // if ( ! aptc_init() ) {
     //     _init = true;
@@ -21,7 +41,11 @@ Gear::Gear(QObject *parent) :
     // emit operateGear();
 }
 
-Gear::~Gear() {}
+Gear::~Gear() {
+    // close the fd for storing active gear
+    close(fd_);
+    // fclose(file_);
+}
 
 void    Gear::abortThread() {
     gearWorker_.abortThread();
@@ -57,18 +81,29 @@ void Gear::setGear(quint8 gear) {
     switch (_gear) {
         case 0: // P // use macro from lib to define cases
             setSpeed(0);
+            // store the gear to active gear file for reading by other processes
+            write(fd_, "P", 1);
+            lseek(fd_, 0, SEEK_SET);
             break;
         case 1: // N
             setSpeed(0);
+            write(fd_, "N", 1);
+            lseek(fd_, 0, SEEK_SET);
             break;
         case 2: // D
             setSpeed(400);
+            write(fd_, "D", 1);
+            lseek(fd_, 0, SEEK_SET);
             break;
         case 3: // R
             setSpeed(400);
+            write(fd_, "R", 1);
+            lseek(fd_, 0, SEEK_SET);
             break;
         default: // Unknown error
             _gear = 0; // park car if unknown error occurs
+            write(fd_, "P", 1);
+            lseek(fd_, 0, SEEK_SET);
             setSpeed(0);
     }
 
